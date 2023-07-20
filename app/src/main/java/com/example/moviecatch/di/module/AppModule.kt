@@ -1,5 +1,8 @@
 package com.example.moviecatch.di.module
 
+import android.app.Application
+import com.example.moviecatch.di.dao.GenreDao
+import com.example.moviecatch.di.dao.GenreDatabase
 import com.example.moviecatch.di.retrofit.RetrofitServiceInstance
 import dagger.Module
 import dagger.Provides
@@ -16,6 +19,20 @@ class AppModule {
     //dagger-hilt'in faydalarından biri : Singeleton yapı ile 1 kere yaratıyoruz
 
     private val baseUrl = "https://api.themoviedb.org/"
+
+    @Provides
+    @Singleton
+    fun getAppDB(context:Application):GenreDatabase{
+        return GenreDatabase.getAppDB(context)
+    }
+
+    @Provides
+    @Singleton
+    fun getDao(appDB: GenreDatabase):GenreDao{
+        return appDB.getDAO()
+    }
+
+
     @Provides
     @Singleton
     fun getRetrofitServiceInstance(retrofit: Retrofit): RetrofitServiceInstance {

@@ -4,6 +4,18 @@
     <string name="first_title">Offline Database</string>
     <string name="first_subtitle">Create you favorite list navigation list navigate your list without internet.</string>
 
+    <string name="second_title">Millions of Movies</string>
+    <string name="second_subtitle">Reach millions of movies instantly</string>
+
+    <string name="third_title">Freedom Translate</string>
+    <string name="third_subtitle">Translate the movie details you don\'t understand into your language with one touch </string>
+
+    <string name="fourth_title">Night Mode</string>
+    <string name="fourth_subtitle">Travel comfortably at night without straining you eyes</string>
+
+    <string name="fifth_title"> Advance Notification</string>
+    <string name="fifth_subtitle">Let me inform you before the date of the vision of the films in your favorite list</string>
+
     <string name="favorite_list_frg">Favorite</string>
     <string name="watch_list_frg">Watch List</string>
     <string name="movie_lists_frg">Collections</string>
@@ -11,5 +23,8 @@
     <string name="home">Home</string>
     <string name="favorites">Favorites</string>
     <string name="settings">Setting</string>
+
+    <string name="prev">Prev</string>
+    <string name="next">Next</string>
 
 </resources>
