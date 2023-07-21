@@ -5,7 +5,7 @@ import javax.inject.Inject
 
 class GenreRepository @Inject constructor(private val genreDao: GenreDao) {
 
-    val readAllData:LiveData<List<GenreData>> = genreDao.readAllData()
+    val readAllData:List<GenreData> = genreDao.readAllData()
 
     fun addGenre(genreData: GenreData){
         genreDao.addGenre(genreData)

@@ -17,7 +17,7 @@ interface RetrofitServiceInstance {
     @GET("3/movie/now_playing?api_key=df2885ea32e1b72e3f5c50ef1ec97470")
     fun getRecentVideos(@Query("page") query:String) : Call<Movie>
 
-    @GET("3/movie/popular?api_key=df2885ea32e1b72e3f5c50ef1ec97470")
+    @GET("3/genre/movie/list?api_key=df2885ea32e1b72e3f5c50ef1ec97470")
     fun getGenres() : Call<Genre>
 
     @GET("3/movie/{id}/videos?api_key=df2885ea32e1b72e3f5c50ef1ec97470")

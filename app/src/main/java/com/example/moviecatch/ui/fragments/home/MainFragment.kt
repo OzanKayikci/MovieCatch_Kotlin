@@ -9,14 +9,18 @@ import androidx.navigation.fragment.findNavController
 import com.example.moviecatch.R
 import com.example.moviecatch.databinding.FragmentMainBinding
 import com.example.moviecatch.databinding.FragmentSplashBinding
+import com.example.moviecatch.prefs.SessionManager
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainFragment:Fragment() {
     private var _binding: FragmentMainBinding? =null
-    // This property is only valid between onCreateView and
-// onDestroyView.
+    // This property is only valid between onCreateView and onDestroyView.
     private val binding get() = _binding!!
+
+    @Inject
+    lateinit var  sessionManager: SessionManager
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -25,6 +29,9 @@ class MainFragment:Fragment() {
     ): View? {
         _binding = FragmentMainBinding.inflate(inflater, container, false)
 
+        if(sessionManager.isFirstRun){
+            sessionManager.isFirstRun = false
+        }
         setupTabBar()
 
         return binding.root

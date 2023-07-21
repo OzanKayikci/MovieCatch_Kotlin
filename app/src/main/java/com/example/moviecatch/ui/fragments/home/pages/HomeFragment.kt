@@ -7,13 +7,12 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.example.moviecatch.R
 import com.example.moviecatch.adapter.MovieAdapter
 import com.example.moviecatch.adapter.RecentMovieAdapter
-import com.example.moviecatch.databinding.ActivityMainBinding
 import com.example.moviecatch.databinding.FragmentHomeBinding
-import com.example.moviecatch.viewmodal.HomePageViewModal
+import com.example.moviecatch.di.dao.GenreData
+import com.example.moviecatch.viewmodal.GenreViewModel
+import com.example.moviecatch.viewmodal.HomePageViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Deferred
@@ -25,13 +24,19 @@ import kotlinx.coroutines.launch
 class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
-    // This property is only valid between onCreateView and onDestroyView.
     private val binding get() = _binding!!
+
+    private var genreList:List<GenreData>? = null
+
     private lateinit var movieAdapter: MovieAdapter
     private lateinit var recentMovieAdapter: RecentMovieAdapter
 
     private val viewModal by lazy {
-        ViewModelProvider(this, defaultViewModelProviderFactory)[HomePageViewModal::class.java]
+        ViewModelProvider(this, defaultViewModelProviderFactory)[HomePageViewModel::class.java]
+    }
+
+    private val genreViewModel by lazy {
+        ViewModelProvider(this, defaultViewModelProviderFactory).get(GenreViewModel::class.java)
     }
 
     override fun onCreateView(
@@ -49,7 +54,7 @@ class HomeFragment : Fragment() {
             viewLifecycleOwner
         ) { t ->
             if (t != null) {
-                movieAdapter.setList(t.results)
+                movieAdapter.setList(t.results,genreList!!)
             }
         }
 
@@ -57,19 +62,24 @@ class HomeFragment : Fragment() {
             viewLifecycleOwner
         ) { t ->
             if (t != null) {
-                recentMovieAdapter.setList(t.results)
+                recentMovieAdapter.setList(t.results,genreList!!)
             }
         }
-        fetchMovies()
 
+        genreViewModel.getRecordsObservable().observe(viewLifecycleOwner) { t ->
+            if (t != null) {
+                genreList = t
+                fetchMovies()
+
+            }
+        }
         return view
     }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
-
-
 
 
     private fun initRecyclerViews() {

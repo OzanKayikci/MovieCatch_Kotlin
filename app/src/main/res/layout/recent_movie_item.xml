@@ -28,6 +28,7 @@
             android:id="@+id/title"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:textStyle="bold"
             android:layout_marginBottom="4dp"
             android:text="Title" />
 
@@ -50,11 +51,11 @@
             android:layout_height="wrap_content">
 
             <ImageView
-                android:layout_width="10dp"
-                android:layout_height="10dp"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 android:layout_gravity="center"
                 android:layout_marginRight="4dp"
-                android:src="@drawable/ic_launcher_background" />
+                android:src="@drawable/baseline_stars_24" />
 
             <TextView
                 android:id="@+id/txtVoteAverage"

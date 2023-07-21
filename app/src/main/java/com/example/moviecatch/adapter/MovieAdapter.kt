@@ -8,28 +8,48 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.moviecatch.R
+import com.example.moviecatch.di.dao.GenreData
 import com.example.moviecatch.models.Result
 
 class MovieAdapter(private val isFirstScreen: Boolean = true) :
     RecyclerView.Adapter<MovieAdapter.MyCustomHolder>() {
 
     var liveData: List<Result>? = null
+    var genreList: List<GenreData>? = null;
 
-    fun setList(liveData: List<Result>) {
+    fun setList(liveData: List<Result>, genreList: List<GenreData>) {
         this.liveData = liveData
+        this.genreList = genreList
+
         notifyDataSetChanged()
     }
+
+    private fun getGenresNameOfMovie(genreIds: List<Int>, genreList: List<GenreData>): String {
+        var genresName: String = ""
+        for (id in genreIds) {
+            var currentGenre = genreList.find { g -> g.genre_id == id }
+
+            if (currentGenre != null) {
+                genresName += "${currentGenre!!.en_name},  "
+
+            }
+        }
+        genresName = genresName.substring(0, genresName.length-3)
+        return genresName
+    }
+
 
     class MyCustomHolder(view: View) : RecyclerView.ViewHolder(view) {
 
         private val textTitle = view.findViewById<TextView>(R.id.title)
-        private  val txtGenre  = view.findViewById<TextView>(R.id.txtGenre)
+        private val txtGenre = view.findViewById<TextView>(R.id.txtGenre)
         private val posterView = view.findViewById<ImageView>(R.id.posterView)
 
-        fun bind(data: Result) {
+        fun bind(data: Result, genresName: String) {
             textTitle.text = data.title
-            txtGenre.text = "deneme deneme deneme"
-            Glide.with(posterView).load("https://image.tmdb.org/t/p/w342/${data.poster_path}").into(posterView)
+            txtGenre.text = genresName
+            Glide.with(posterView).load("https://image.tmdb.org/t/p/w342/${data.poster_path}")
+                .into(posterView)
         }
     }
 
@@ -40,7 +60,9 @@ class MovieAdapter(private val isFirstScreen: Boolean = true) :
     }
 
     override fun onBindViewHolder(holder: MyCustomHolder, position: Int) {
-        holder.bind(liveData!![position])
+        var genreNames = getGenresNameOfMovie(liveData!![position].genre_ids, genreList!!)
+
+        holder.bind(liveData!![position], genreNames)
     }
 
     override fun getItemCount(): Int {

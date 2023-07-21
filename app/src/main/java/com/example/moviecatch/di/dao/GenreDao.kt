@@ -16,5 +16,5 @@ interface GenreDao {
     fun addAllGenres(objects: List<GenreData>)
 
     @Query("SELECT * FROM genres")
-    fun readAllData():LiveData<List<GenreData>>
+    fun readAllData():List<GenreData>
 }
