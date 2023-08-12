@@ -1,8 +1,13 @@
 package com.example.moviecatch.di.retrofit
 
 import androidx.lifecycle.MutableLiveData
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import com.example.moviecatch.models.Details
 import com.example.moviecatch.models.Genre
 import com.example.moviecatch.models.Movie
+import kotlinx.coroutines.flow.Flow
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -11,20 +16,18 @@ import javax.inject.Inject
 
 class RetrofitRepository @Inject constructor(private val retrofitServiceInstance: RetrofitServiceInstance) {
 
-    fun getPopularMovies(page:String, liveData:MutableLiveData<Movie>){
-        retrofitServiceInstance.getPopularVideos(page).enqueue(object : Callback<Movie>{
-            override fun onResponse(call: Call<Movie>, response: Response<Movie>) {
-                liveData.postValue(response.body())
-            }
+    suspend fun getPopularMovies(page: String):Movie? {
+        val response: Response<Movie> = retrofitServiceInstance.getPopularVideos(page)
 
-            override fun onFailure(call: Call<Movie>, t: Throwable) {
-               liveData.postValue(null)
-            }
-
-        })
+        return if (response.isSuccessful) {
+            return response.body()
+        } else {
+            return null
+        }
     }
-    fun getAllGenres(liveData: MutableLiveData<Genre>){
-        retrofitServiceInstance.getGenres().enqueue(object : Callback<Genre>{
+
+    fun getAllGenres(liveData: MutableLiveData<Genre>) {
+        retrofitServiceInstance.getGenres().enqueue(object : Callback<Genre> {
             override fun onResponse(call: Call<Genre>, response: Response<Genre>) {
                 liveData.postValue(response.body())
             }
@@ -35,16 +38,25 @@ class RetrofitRepository @Inject constructor(private val retrofitServiceInstance
 
         })
     }
-    fun getRecentMovies(page:String, liveData:MutableLiveData<Movie>){
-        retrofitServiceInstance.getRecentVideos(page).enqueue(object : Callback<Movie>{
-            override fun onResponse(call: Call<Movie>, response: Response<Movie>) {
-                liveData.postValue(response.body())
-            }
 
-            override fun onFailure(call: Call<Movie>, t: Throwable) {
-                liveData.postValue(null)
-            }
+   suspend fun getRecentMovies(page: String): Movie? {
+        val response: Response<Movie> = retrofitServiceInstance.getRecentVideos(page)
 
-        })
+        return if (response.isSuccessful) {
+            return response.body()
+        } else {
+            return null
+        }
     }
+
+    suspend fun getMovieDetails(id:Int):Details?{
+        val response : Response<Details> = retrofitServiceInstance.getMovieDetails(id)
+        return if(response.isSuccessful){
+            return response.body()
+        }
+        else{
+            return null
+        }
+    }
+
 }

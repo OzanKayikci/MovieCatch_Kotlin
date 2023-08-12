@@ -4,9 +4,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
+import androidx.navigation.NavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.moviecatch.R
 import com.example.moviecatch.adapter.MovieAdapter
 import com.example.moviecatch.adapter.RecentMovieAdapter
 import com.example.moviecatch.databinding.FragmentHomeBinding
@@ -26,7 +32,7 @@ class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
 
-    private var genreList:List<GenreData>? = null
+    private var genreList: List<GenreData>? = null
 
     private lateinit var movieAdapter: MovieAdapter
     private lateinit var recentMovieAdapter: RecentMovieAdapter
@@ -49,12 +55,23 @@ class HomeFragment : Fragment() {
         val view = binding.root
 
         initRecyclerViews()
+        observerFunctions()
+        buttonHandles()
 
+        return view
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
+    private fun observerFunctions() {
         viewModal.getObserverLiveData(true).observe(
             viewLifecycleOwner
         ) { t ->
             if (t != null) {
-                movieAdapter.setList(t.results,genreList!!)
+                movieAdapter.setList(t.results, genreList!!)
             }
         }
 
@@ -62,7 +79,7 @@ class HomeFragment : Fragment() {
             viewLifecycleOwner
         ) { t ->
             if (t != null) {
-                recentMovieAdapter.setList(t.results,genreList!!)
+                recentMovieAdapter.setList(t.results, genreList!!)
             }
         }
 
@@ -73,14 +90,7 @@ class HomeFragment : Fragment() {
 
             }
         }
-        return view
     }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
-
 
     private fun initRecyclerViews() {
         val lmHorizontal =
@@ -90,18 +100,18 @@ class HomeFragment : Fragment() {
 
 
         binding.recycleView.layoutManager = lmHorizontal
-        movieAdapter = MovieAdapter()
+        movieAdapter = MovieAdapter(navController = findNavController())
         binding.recycleView.adapter = movieAdapter
 
 
         binding.recentRecyclerView.layoutManager = lmVertical
-        recentMovieAdapter = RecentMovieAdapter()
+        recentMovieAdapter = RecentMovieAdapter(navController = findNavController())
         binding.recentRecyclerView.adapter = recentMovieAdapter
     }
 
-    fun fetchMovies() {
+    private fun fetchMovies() {
         CoroutineScope(Dispatchers.IO).launch {
-            val job1: Deferred<Unit> = async {
+                val job1: Deferred<Unit> = async {
                 viewModal.loadData("1", true)
 
             }
@@ -112,6 +122,19 @@ class HomeFragment : Fragment() {
 
             job1.await()
             job2.await()
+        }
+    }
+
+    private fun buttonHandles() {
+
+        binding.seeAllPopular.setOnClickListener {
+            val bundle = bundleOf("type" to "Popular")
+            findNavController().navigate(R.id.action_homeFragment_to_allMoviesFragment,bundle)
+        }
+        binding.seeAllRecent.setOnClickListener {
+            val bundle = bundleOf("type" to "Recent")
+
+            findNavController().navigate(R.id.action_homeFragment_to_allMoviesFragment,bundle)
         }
     }
 }

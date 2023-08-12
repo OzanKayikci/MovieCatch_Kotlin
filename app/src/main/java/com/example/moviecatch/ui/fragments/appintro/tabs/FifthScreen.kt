@@ -36,15 +36,27 @@ class FifthScreen : Fragment() {
         stringHelper = StringHelper()
         homePageViewModel = ViewModelProvider(this).get(HomePageViewModel::class.java)
         genreViewModel = ViewModelProvider(this).get(GenreViewModel::class.java)
-        setGenreList()
 
-        binding.nextBtn.setOnClickListener {
-            homePageViewModel.loadGenreData()
-        }
+        setupGenreList()
+        setupButtonClick()
+
         return view
     }
 
-    private fun setGenreList() {
+
+
+    override fun onResume() {
+        super.onResume()
+        setupNavigationButtons()
+
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
+    private fun setupGenreList() {
         genreList = mutableListOf()
 
         homePageViewModel.getObserverGenre().observe(viewLifecycleOwner) { genreResponse ->
@@ -57,7 +69,7 @@ class FifthScreen : Fragment() {
 
                 genreList?.let { list ->
                     genreViewModel.addAllGenres(list)
-                    findNavController().navigate(R.id.action_appIntroFragment_to_mainFragment)
+                    navigateToMainFragment()
                 }
             }
         }
@@ -75,7 +87,13 @@ class FifthScreen : Fragment() {
 //        }
     }
 
-    override fun onResume() {
+    private fun setupButtonClick() {
+        binding.nextBtn.setOnClickListener {
+            homePageViewModel.loadGenreData()
+        }
+    }
+
+    private fun setupNavigationButtons() {
         val viewPager = activity?.findViewById<ViewPager2>(R.id.viewPager)
         val prevButton = activity?.findViewById<RelativeLayout>(R.id.prevButton)
         val nextButton = activity?.findViewById<RelativeLayout>(R.id.nextButton)
@@ -88,15 +106,9 @@ class FifthScreen : Fragment() {
         prevButton?.setOnClickListener {
             viewPager?.currentItem = 3
         }
-
-
-
-        super.onResume()
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+    private fun navigateToMainFragment() {
+        findNavController().navigate(R.id.action_appIntroFragment_to_mainFragment)
     }
-
 }

@@ -6,7 +6,7 @@
     app:startDestination="@id/homeFragment">
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.example.moviecatch.ui.fragments.home.pages.HomeFragment"
+        android:name="com.example.moviecatch.ui.fragments.home.pages.MoviesPagesFragment"
         android:label="HomeFragment" />
     <fragment
         android:id="@+id/favoriteFragment"

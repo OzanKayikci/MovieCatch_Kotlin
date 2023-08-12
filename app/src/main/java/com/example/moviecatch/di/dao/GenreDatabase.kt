@@ -9,6 +9,11 @@ import androidx.room.RoomDatabase
 abstract class GenreDatabase : RoomDatabase() {
     abstract fun getDAO(): GenreDao
 
+
+    /** özel bir nesnedir ve bu nesne, sınıfın kendisiyle ilişkilendirilir.
+     * companion object içinde tanımlanan özellikler ve işlevler, sınıfın statik üyeleri olarak kabul edilir,
+     * yani sınıfın herhangi bir örneği oluşturulmadan doğrudan sınıf adı üzerinden erişilebilirler.
+     * */
     companion object {
         private var dbINSTANCE: GenreDatabase? = null
         fun getAppDB(context: Context): GenreDatabase {

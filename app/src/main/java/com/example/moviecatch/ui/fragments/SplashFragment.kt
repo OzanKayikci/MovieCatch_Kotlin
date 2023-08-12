@@ -17,9 +17,8 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class SplashFragment : Fragment() {
     private var _binding: FragmentSplashBinding? = null
-
     // This property is only valid between onCreateView and onDestroyView.
-    private val binding get() = _binding!!
+     val binding get() = _binding!!
 
     @Inject
     lateinit var  sessionManager: SessionManager

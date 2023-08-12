@@ -5,13 +5,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.os.bundleOf
+import androidx.navigation.NavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.moviecatch.R
 import com.example.moviecatch.di.dao.GenreData
 import com.example.moviecatch.models.Result
 
-class MovieAdapter(private val isFirstScreen: Boolean = true) :
+class MovieAdapter(private val isFirstScreen: Boolean = true, private  val navController: NavController) :
     RecyclerView.Adapter<MovieAdapter.MyCustomHolder>() {
 
     var liveData: List<Result>? = null
@@ -61,8 +63,17 @@ class MovieAdapter(private val isFirstScreen: Boolean = true) :
 
     override fun onBindViewHolder(holder: MyCustomHolder, position: Int) {
         var genreNames = getGenresNameOfMovie(liveData!![position].genre_ids, genreList!!)
-
+        val movie = liveData!![position]
         holder.bind(liveData!![position], genreNames)
+
+        holder.itemView.setOnClickListener{
+
+            val bundle = bundleOf("id" to movie?.id.toString())
+
+            navController.navigate(R.id.action_homeFragment_to_movieDetailsFragment,bundle)
+
+
+        }
     }
 
     override fun getItemCount(): Int {
