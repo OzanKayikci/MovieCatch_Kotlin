@@ -3,15 +3,16 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_marginRight="8dp"
+
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <LinearLayout
-        android:layout_width="342px"
+        android:layout_width="95dp"
         android:orientation="vertical"
         android:layout_height="wrap_content">
         <androidx.cardview.widget.CardView
-            android:layout_width="342px"
-            android:layout_height="513px"
+            android:layout_width="95dp"
+            android:layout_height="146dp"
             android:elevation="0dp"
             app:cardCornerRadius="16dp">
             <ImageView
@@ -23,14 +24,15 @@
             android:id="@+id/title"
             android:text="Title"
             android:textStyle="bold"
+            android:textAlignment="center"
             android:layout_marginTop="4dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
-        <TextView
-            android:id="@+id/txtGenre"
-            android:text="Deneme "
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+<!--        <TextView-->
+<!--            android:id="@+id/txtGenre"-->
+<!--            android:text=""-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent" />-->
     </LinearLayout>
 
 </RelativeLayout>

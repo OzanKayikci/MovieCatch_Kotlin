@@ -3,14 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/home_nav"
-    app:startDestination="@id/homeFragment">
+    app:startDestination="@id/moviesPagesFragment">
     <fragment
-        android:id="@+id/homeFragment"
+        android:id="@+id/moviesPagesFragment"
         android:name="com.example.moviecatch.ui.fragments.home.pages.MoviesPagesFragment"
         android:label="HomeFragment" />
     <fragment
-        android:id="@+id/favoriteFragment"
-        android:name="com.example.moviecatch.ui.fragments.home.pages.FavoriteFragment"
+        android:id="@+id/favoritePagesFragment"
+        android:name="com.example.moviecatch.ui.fragments.home.pages.FavoritePagesFragment"
         android:label="FavoriteFragment" />
     <fragment
         android:id="@+id/settingsFragment"

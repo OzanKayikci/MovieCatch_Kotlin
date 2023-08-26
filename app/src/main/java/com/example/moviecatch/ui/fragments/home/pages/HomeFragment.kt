@@ -17,6 +17,8 @@ import com.example.moviecatch.adapter.MovieAdapter
 import com.example.moviecatch.adapter.RecentMovieAdapter
 import com.example.moviecatch.databinding.FragmentHomeBinding
 import com.example.moviecatch.di.dao.GenreData
+import com.example.moviecatch.models.MovieResult
+import com.example.moviecatch.viewmodal.FavoritesViewModel
 import com.example.moviecatch.viewmodal.GenreViewModel
 import com.example.moviecatch.viewmodal.HomePageViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -92,6 +94,7 @@ class HomeFragment : Fragment() {
         }
     }
 
+
     private fun initRecyclerViews() {
         val lmHorizontal =
             LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
@@ -105,19 +108,19 @@ class HomeFragment : Fragment() {
 
 
         binding.recentRecyclerView.layoutManager = lmVertical
-        recentMovieAdapter = RecentMovieAdapter(navController = findNavController())
+        recentMovieAdapter =
+            RecentMovieAdapter(navController = findNavController())
         binding.recentRecyclerView.adapter = recentMovieAdapter
     }
 
     private fun fetchMovies() {
         CoroutineScope(Dispatchers.IO).launch {
-                val job1: Deferred<Unit> = async {
+            val job1: Deferred<Unit> = async {
                 viewModal.loadData("1", true)
 
             }
             val job2: Deferred<Unit> = async {
                 viewModal.loadData("1", false)
-
             }
 
             job1.await()
@@ -129,12 +132,12 @@ class HomeFragment : Fragment() {
 
         binding.seeAllPopular.setOnClickListener {
             val bundle = bundleOf("type" to "Popular")
-            findNavController().navigate(R.id.action_homeFragment_to_allMoviesFragment,bundle)
+            findNavController().navigate(R.id.action_homeFragment_to_allMoviesFragment, bundle)
         }
         binding.seeAllRecent.setOnClickListener {
             val bundle = bundleOf("type" to "Recent")
 
-            findNavController().navigate(R.id.action_homeFragment_to_allMoviesFragment,bundle)
+            findNavController().navigate(R.id.action_homeFragment_to_allMoviesFragment, bundle)
         }
     }
 }

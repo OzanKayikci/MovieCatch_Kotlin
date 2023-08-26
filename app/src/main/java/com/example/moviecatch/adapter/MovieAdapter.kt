@@ -11,15 +11,18 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.moviecatch.R
 import com.example.moviecatch.di.dao.GenreData
-import com.example.moviecatch.models.Result
+import com.example.moviecatch.models.MovieResult
 
-class MovieAdapter(private val isFirstScreen: Boolean = true, private  val navController: NavController) :
+class MovieAdapter(
+    private val isFirstScreen: Boolean = true,
+    private val navController: NavController
+) :
     RecyclerView.Adapter<MovieAdapter.MyCustomHolder>() {
 
-    var liveData: List<Result>? = null
+    var liveData: List<MovieResult>? = null
     var genreList: List<GenreData>? = null;
 
-    fun setList(liveData: List<Result>, genreList: List<GenreData>) {
+    fun setList(liveData: List<MovieResult>, genreList: List<GenreData>) {
         this.liveData = liveData
         this.genreList = genreList
 
@@ -28,15 +31,16 @@ class MovieAdapter(private val isFirstScreen: Boolean = true, private  val navCo
 
     private fun getGenresNameOfMovie(genreIds: List<Int>, genreList: List<GenreData>): String {
         var genresName: String = ""
+        var genreCount: Int = 0
         for (id in genreIds) {
             var currentGenre = genreList.find { g -> g.genre_id == id }
 
-            if (currentGenre != null) {
+            if (currentGenre != null && genreCount < 3) {
                 genresName += "${currentGenre!!.en_name},  "
-
+                genreCount++
             }
         }
-        genresName = genresName.substring(0, genresName.length-3)
+        genresName = genresName.substring(0, genresName.length - 3)
         return genresName
     }
 
@@ -44,12 +48,12 @@ class MovieAdapter(private val isFirstScreen: Boolean = true, private  val navCo
     class MyCustomHolder(view: View) : RecyclerView.ViewHolder(view) {
 
         private val textTitle = view.findViewById<TextView>(R.id.title)
-        private val txtGenre = view.findViewById<TextView>(R.id.txtGenre)
+        //private val txtGenre = view.findViewById<TextView>(R.id.txtGenre)
         private val posterView = view.findViewById<ImageView>(R.id.posterView)
 
-        fun bind(data: Result, genresName: String) {
+        fun bind(data: MovieResult, genresName: String) {
             textTitle.text = data.title
-            txtGenre.text = genresName
+           // txtGenre.text = genresName
             Glide.with(posterView).load("https://image.tmdb.org/t/p/w342/${data.poster_path}")
                 .into(posterView)
         }
@@ -66,11 +70,11 @@ class MovieAdapter(private val isFirstScreen: Boolean = true, private  val navCo
         val movie = liveData!![position]
         holder.bind(liveData!![position], genreNames)
 
-        holder.itemView.setOnClickListener{
+        holder.itemView.setOnClickListener {
 
             val bundle = bundleOf("id" to movie?.id.toString())
 
-            navController.navigate(R.id.action_homeFragment_to_movieDetailsFragment,bundle)
+            navController.navigate(R.id.action_homeFragment_to_movieDetailsFragment, bundle)
 
 
         }

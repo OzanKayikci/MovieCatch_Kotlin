@@ -48,8 +48,8 @@ class MainFragment:Fragment() {
         //oradaki sıralamayı söylüyoruz
         binding.bottomNavBar.setOnItemSelectedListener {
             when(it){
-                R.id.nav_home -> childFragmentManager.primaryNavigationFragment?.findNavController()?.navigate(R.id.homeFragment)
-                R.id.nav_favorites -> childFragmentManager.primaryNavigationFragment?.findNavController()?.navigate(R.id.favoriteFragment)
+                R.id.nav_home -> childFragmentManager.primaryNavigationFragment?.findNavController()?.navigate(R.id.moviesPagesFragment)
+                R.id.nav_favorites -> childFragmentManager.primaryNavigationFragment?.findNavController()?.navigate(R.id.favoritePagesFragment)
                 R.id.nav_settings -> childFragmentManager.primaryNavigationFragment?.findNavController()?.navigate(R.id.settingsFragment)
             }
         }

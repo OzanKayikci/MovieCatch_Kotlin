@@ -8,8 +8,7 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.example.moviecatch.di.retrofit.RetrofitRepository
-import com.example.moviecatch.models.Movie
-import com.example.moviecatch.models.Result
+import com.example.moviecatch.models.MovieResult
 import com.example.moviecatch.paging.MoviesPagingSource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
@@ -21,7 +20,7 @@ class AllMoviesViewModel @Inject constructor(private val repository: RetrofitRep
 
     val loading =  MutableLiveData<Boolean>()
 
-    fun getMoviesByPage(page: Int, type: String): Flow<PagingData<Result>> {
+    fun getMoviesByPage(page: Int, type: String): Flow<PagingData<MovieResult>> {
 
         return Pager(
             config = PagingConfig(pageSize = page),

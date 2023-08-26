@@ -1,8 +1,10 @@
 package com.example.moviecatch.di.retrofit
 
 import com.example.moviecatch.models.Details
+import com.example.moviecatch.models.ExternalIds
 import com.example.moviecatch.models.Genre
 import com.example.moviecatch.models.Movie
+import com.example.moviecatch.models.MovieResult
 import com.example.moviecatch.models.Trailer
 import retrofit2.Call
 import retrofit2.Response
@@ -26,8 +28,12 @@ interface RetrofitServiceInstance {
     fun getGenres() : Call<Genre>
 
     @GET("3/movie/{id}/videos?api_key=df2885ea32e1b72e3f5c50ef1ec97470")
-    fun getTrailerTeasers(@Path("id") id:Int): Call<Trailer>
+    suspend  fun getTrailerTeasers(@Path("id") id:Int): Response<Trailer>
 
+    @GET("3/find/{id}?external_source=imdb_id&api_key=df2885ea32e1b72e3f5c50ef1ec97470")
+    suspend fun getMovieById(@Path("id") id:String):Response<MovieResult>
+ @GET("3/movie/{id}/external_ids?api_key=df2885ea32e1b72e3f5c50ef1ec97470")
+ suspend fun getMovieExternalIds(@Path("id") id:Int):Response<ExternalIds>
     @GET("3/search/movie?api_key=df2885ea32e1b72e3f5c50ef1ec97470")
     fun getSuggestions(@Query("query") query:String) : Call<Movie>
 

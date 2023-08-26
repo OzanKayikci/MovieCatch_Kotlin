@@ -5,6 +5,8 @@ import android.content.Context
 import android.content.SharedPreferences
 import com.example.moviecatch.di.dao.GenreDao
 import com.example.moviecatch.di.dao.GenreDatabase
+import com.example.moviecatch.di.dao.MovieDao
+import com.example.moviecatch.di.dao.MovieDatabase
 import com.example.moviecatch.di.retrofit.RetrofitServiceInstance
 import com.example.moviecatch.prefs.SessionManager
 import com.example.moviecatch.util.Constants
@@ -27,7 +29,8 @@ class AppModule {
 
     @Provides
     @Singleton
-    fun provideSharedPreferences(@ApplicationContext context:Context): SharedPreferences = context.getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE)
+    fun provideSharedPreferences(@ApplicationContext context: Context): SharedPreferences =
+        context.getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE)
 
 
     @Provides
@@ -36,16 +39,27 @@ class AppModule {
 
     @Provides
     @Singleton
-    fun getAppDB(context:Application):GenreDatabase{
+    fun getAppDB(context: Application): GenreDatabase {
         return GenreDatabase.getAppDB(context)
     }
 
     @Provides
     @Singleton
-    fun getDao(appDB: GenreDatabase):GenreDao{
+    fun getDao(appDB: GenreDatabase): GenreDao {
         return appDB.getDAO()
     }
 
+    @Provides
+    @Singleton
+    fun getMovieDb(context: Application): MovieDatabase {
+        return MovieDatabase.getMovieDB(context)
+    }
+
+    @Provides
+    @Singleton
+    fun getMovieDao(movieDb: MovieDatabase): MovieDao {
+        return movieDb.getMovieDao()
+    }
 
     @Provides
     @Singleton
@@ -56,7 +70,7 @@ class AppModule {
 
     @Provides
     @Singleton
-    fun getRetroInstance():Retrofit{
+    fun getRetroInstance(): Retrofit {
         return Retrofit.Builder().baseUrl(baseUrl)
             .addConverterFactory(GsonConverterFactory.create()).build()
     }

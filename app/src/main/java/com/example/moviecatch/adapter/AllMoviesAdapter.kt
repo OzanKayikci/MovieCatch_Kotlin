@@ -3,25 +3,22 @@ package com.example.moviecatch.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.os.bundleOf
 import androidx.navigation.NavController
-import androidx.navigation.Navigation.findNavController
-import androidx.navigation.fragment.findNavController
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.moviecatch.R
 import com.example.moviecatch.di.dao.GenreData
-import com.example.moviecatch.models.Result
+import com.example.moviecatch.models.MovieResult
 import javax.inject.Inject
 
 
 class AllMoviesAdapter @Inject constructor(private val navController: NavController) :
-    PagingDataAdapter<Result, AllMoviesAdapter.MyCustomHolder>(
+    PagingDataAdapter<MovieResult, AllMoviesAdapter.MyCustomHolder>(
         COMPARATOR
     ) {
 
@@ -54,8 +51,8 @@ class AllMoviesAdapter @Inject constructor(private val navController: NavControl
         private val txtReleaseDate = view.findViewById<TextView>(R.id.txtReleaseDate)
         private val txtVoteAverage = view.findViewById<TextView>(R.id.txtVoteAverage)
 
-        private  val detailsButton = view.findViewById<Button>(R.id.detailButton)
-        fun bind(data: Result, genresName: String) {
+
+        fun bind(data: MovieResult, genresName: String) {
             textTitle.text = data.title
             txtGenre.text = genresName
             txtReleaseDate.text = data.release_date
@@ -96,12 +93,12 @@ class AllMoviesAdapter @Inject constructor(private val navController: NavControl
 
 
     companion object {
-        private val COMPARATOR = object : DiffUtil.ItemCallback<Result>() {
-            override fun areItemsTheSame(oldItem: Result, newItem: Result): Boolean {
+        private val COMPARATOR = object : DiffUtil.ItemCallback<MovieResult>() {
+            override fun areItemsTheSame(oldItem: MovieResult, newItem: MovieResult): Boolean {
                 return oldItem.id == newItem.id
             }
 
-            override fun areContentsTheSame(oldItem: Result, newItem: Result): Boolean {
+            override fun areContentsTheSame(oldItem: MovieResult, newItem: MovieResult): Boolean {
                 return oldItem == newItem
             }
         }

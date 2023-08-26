@@ -16,21 +16,22 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.moviecatch.R
 import com.example.moviecatch.di.dao.GenreData
+import com.example.moviecatch.di.dao.MovieData
 import com.example.moviecatch.models.MovieResult
 import com.example.moviecatch.ui.customviews.AddFavoritesButton
 
-class RecentMovieAdapter(
-    private val isFirstScreen: Boolean = true,
+class FavoriteMovieAdapter(
+
     private val navController: NavController,
 
-) :
-    RecyclerView.Adapter<RecentMovieAdapter.MyCustomHolder>() {
+    ) :
+    RecyclerView.Adapter<FavoriteMovieAdapter.MyCustomHolder>() {
 
-   private var recentMovies: List<MovieResult>? = null;
+    private var favoriteMovies: List<MovieData>? = null;
     var genreList: List<GenreData>? = null;
 
-    fun setList(recentMovies: List<MovieResult>, genreList: List<GenreData>) {
-        this.recentMovies = recentMovies
+    fun setList(favoriteMovies: List<MovieData>, genreList: List<GenreData>) {
+        this.favoriteMovies = favoriteMovies
         this.genreList = genreList
         notifyDataSetChanged()
     }
@@ -59,16 +60,16 @@ class RecentMovieAdapter(
 
         private val favoritesButton = view.findViewById<AddFavoritesButton>(R.id.favoriteButton)
         fun bind(
-            data: MovieResult,
+            data: MovieData,
             genresName: String,
 
             ) {
 
             textTitle.text = data.title
             txtGenre.text = genresName
-            txtReleaseDate.text = data.release_date
-            txtVoteAverage.text = data.vote_average.toString() + "/ 10"
-            Glide.with(posterView).load("https://image.tmdb.org/t/p/w342/${data.poster_path}")
+            txtReleaseDate.text = data.releaseDate
+            txtVoteAverage.text = data.voteAverage.toString() + "/ 10"
+            Glide.with(posterView).load("https://image.tmdb.org/t/p/w342/${data.posterPath}")
                 .into(posterView)
 
             favoritesButton.setFavorite(true)
@@ -87,15 +88,15 @@ class RecentMovieAdapter(
     }
 
     override fun onBindViewHolder(holder: MyCustomHolder, position: Int) {
-        var genreNames = getGenresNameOfMovie(recentMovies!![position].genre_ids, genreList!!)
-        holder.bind(recentMovies!![position], genreNames)
-        val movie = recentMovies!![position]
+        var genreNames = getGenresNameOfMovie(favoriteMovies!![position].genresId, genreList!!)
+        holder.bind(favoriteMovies!![position], genreNames)
+        val movie = favoriteMovies!![position]
 
         holder.itemView.setOnClickListener {
 
             val bundle = bundleOf("id" to movie?.id.toString())
 
-            navController.navigate(R.id.action_homeFragment_to_movieDetailsFragment, bundle)
+            navController.navigate(R.id.action_favoriteFragment_to_movieDetailsFragment, bundle)
 
         }
 
@@ -103,14 +104,10 @@ class RecentMovieAdapter(
     }
 
     override fun getItemCount(): Int {
-        return if (recentMovies == null) {
-            0
-        } else {
-            if (!isFirstScreen) {
-                return recentMovies!!.size
-            }
-            8
+        if (favoriteMovies == null) {
+            return 0
         }
+        return favoriteMovies!!.size
     }
 
 

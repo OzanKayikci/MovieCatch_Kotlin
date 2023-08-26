@@ -8,8 +8,8 @@
     android:orientation="horizontal">
 
     <androidx.cardview.widget.CardView
-        android:layout_width="342px"
-        android:layout_height="513px"
+        android:layout_width="95dp"
+        android:layout_height="146dp"
         android:layout_marginRight="8dp"
         android:elevation="0dp"
         app:cardCornerRadius="10dp">
@@ -22,44 +22,52 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+
         android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+
             android:orientation="vertical">
 
             <TextView
                 android:id="@+id/title"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginBottom="4dp"
                 android:text="Title"
+                android:layout_weight="1"
+                android:textSize="18dp"
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/txtGenre"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginBottom="4dp"
+                android:layout_weight="1"
                 android:text="Deneme " />
 
             <TextView
                 android:id="@+id/txtReleaseDate"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginBottom="4dp"
+                android:layout_weight="1"
                 android:text="2022-02-04 " />
 
             <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_weight="1">
 
                 <ImageView
                     android:layout_width="20dp"
                     android:layout_height="20dp"
-                    android:layout_gravity="center"
+
                     android:layout_marginRight="4dp"
                     android:src="@drawable/baseline_stars_24" />
 
@@ -75,21 +83,24 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:orientation="vertical">
+            android:visibility="gone"
+            android:gravity="end"
+            android:orientation="horizontal">
 
-            <Button
+            <include
+                android:id="@+id/watchlistButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="20dp"
+                layout="@layout/watchlist_button_item" />
 
-                android:layout_gravity="end"
-                android:id="@+id/detailButton"
-                android:layout_width="100dp"
-                android:layout_height="40dp"
-                app:backgroundTint="@null"
-                android:text="@string/details"
-                android:textSize="16dp"
-                android:textColor="@color/actioncolorWhite"
-                android:background="@drawable/button_background" />
+            <include
+                android:id="@+id/favoriteButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                layout="@layout/favorite_button_item" />
 
         </LinearLayout>
+
     </LinearLayout>
 </LinearLayout>

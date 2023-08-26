@@ -1,6 +1,6 @@
 package com.example.moviecatch.models
 
-data class Result(
+data class MovieResult(
     val backdrop_page:String,
     val genre_ids : List<Int>,
     val id :Int,

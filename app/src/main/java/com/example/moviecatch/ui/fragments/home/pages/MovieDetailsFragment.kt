@@ -1,32 +1,52 @@
 package com.example.moviecatch.ui.fragments.home.pages
 
+import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
+import com.example.moviecatch.R
+import com.example.moviecatch.adapter.ViewPagerAdapter
 import com.example.moviecatch.databinding.FragmentMovieDetailsBinding
-import com.example.moviecatch.viewmodal.HomePageViewModel
+import com.example.moviecatch.models.Details
+import com.example.moviecatch.models.MovieResult
+import com.example.moviecatch.ui.customviews.AddFavoritesButton
+
+import com.example.moviecatch.ui.fragments.home.pages.moviedetailstabs.DetailsAboutFragment
+import com.example.moviecatch.ui.fragments.home.pages.moviedetailstabs.DetailsCastFragment
+import com.example.moviecatch.ui.fragments.home.pages.moviedetailstabs.DetailsTrailersFragment
+import com.example.moviecatch.viewmodal.FavoritesViewModel
 import com.example.moviecatch.viewmodal.MovieDetailsViewModel
+
+import com.google.android.material.tabs.TabLayoutMediator
+
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Deferred
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
+
 
 @AndroidEntryPoint
 class MovieDetailsFragment : Fragment() {
     private var _binding: FragmentMovieDetailsBinding? = null
 
-    // This property is only valid between onCreateView and onDestroyView.
+    private lateinit var favoriteButton: AddFavoritesButton
+    private var watchlistButton: ImageButton? = null
+
     private val binding get() = _binding!!
     private var movieId: Int = 0
     private val viewModal by lazy {
         ViewModelProvider(this, defaultViewModelProviderFactory)[MovieDetailsViewModel::class.java]
+    }
+
+    private val favoritesViewModel by lazy {
+        ViewModelProvider(this, defaultViewModelProviderFactory)[FavoritesViewModel::class.java]
     }
 
     override fun onCreateView(
@@ -37,35 +57,140 @@ class MovieDetailsFragment : Fragment() {
         _binding = FragmentMovieDetailsBinding.inflate(inflater, container, false)
         val view = binding.root
 
+        favoriteButton = binding.root.findViewById(R.id.add_favorites)
+        watchlistButton = binding.root.findViewById<View>(R.id.add_watchlist) as ImageButton
+
         movieId = arguments?.getString("id")!!.toInt()
         fetchDetails(movieId)
         observerFunctions()
+
         return view
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-
-    }
 
     private fun observerFunctions() {
-        viewModal.getObservableMovieDetails().observe(viewLifecycleOwner){
-            if (it!=null){
+        viewModal.getObservableMovieDetails().observe(viewLifecycleOwner) { it ->
+            if (it != null) {
+
+
                 binding.title.text = it.title
-                binding.overview.text = it.overview
-                binding.releseDate.text = it.release_date
-                binding.txtVoteAverage.text = it.vote_average.toString() + "/ 10"
-                binding.voteCount.text = "(${it.vote_count})"
-                Glide.with(binding.posterView).load("https://image.tmdb.org/t/p/w342/${it.backdrop_path}")
+
+                Glide.with(binding.posterView)
+                    .load("https://image.tmdb.org/t/p/w342/${it.poster_path}")
                     .into(binding.posterView)
+                Glide.with(binding.posterView)
+                    .load("https://image.tmdb.org/t/p/w342/${it.backdrop_path}")
+                    .into(binding.backdropView)
+
+                buttonsHandle(it)
+                initTabLayout(it)
+
             }
+
+
+        }
+        favoritesViewModel.getChangedMovieObservable()
+            .observe(viewLifecycleOwner) { localMovie ->
+                if (localMovie != null) {
+                    favoriteButton.setFavorite(true)
+                } else {
+                    favoriteButton.setFavorite(false)
+                }
+            }
+        viewModal.getObservableMovieTrailers().observe(viewLifecycleOwner) {
+//            initTrailerVideo(it.results[0].key)
+
         }
     }
+
     private fun fetchDetails(id: Int) {
         lifecycleScope.launch {
 
-            viewModal.getMovieDetails(id)
+            val job1: Deferred<Unit> = async { viewModal.getMovieDetails(id) }
+            val job2: Deferred<Unit> = async { viewModal.getMovieTrailers(id) }
+
+            job1.await()
+            job2.await()
+        }
+    }
+
+
+    private fun initTabLayout(details: Details) {
+        val tabLayoutMediator =
+            TabLayoutMediator(binding.tabLayout, binding.detailsViewPager) { tab, position ->
+                when (position) {
+                    0 -> tab.text = "About"
+                    1 -> tab.text = "Trailers"
+                    2 -> tab.text = "Cast"
+                }
+            }
+        val fragmentList = arrayListOf<Fragment>(
+            DetailsAboutFragment(details),
+            DetailsTrailersFragment(details.id),
+            DetailsCastFragment(),
+        )
+        val adapter =
+            ViewPagerAdapter(fragmentList, requireActivity().supportFragmentManager, lifecycle)
+        binding.detailsViewPager.adapter = adapter
+
+
+        tabLayoutMediator.attach()
+
+    }
+
+    private fun buttonsHandle(details: Details) {
+
+        favoritesViewModel.getMovieFromDb(details.id)
+
+        favoriteButton.setOnClickListener {
+            if (!favoriteButton.isFavorite) {
+                favoritesViewModel.addMovieToDb(details, true) { response ->
+                    if (response) {
+                        favoriteButton.toggleFavorite()
+                    }
+
+                }
+
+            } else {
+                favoritesViewModel.deleteMovieFromDb(details.id) { response ->
+                    if (response) {
+                        favoritesViewModel.getMovieFromDb(it.id)
+                    }
+                }
+            }
 
         }
+
+    }
+
+//    private fun initTrailerVideo(id:String) {
+//        youTubePlayerView = binding.youtubePlayerView
+//
+    //        val iFramePlayerOptions = IFramePlayerOptions.Builder()
+//            .controls(1)
+//            .autoplay(0)
+//            .fullscreen(1) // enable full screen button
+//            .build()
+//
+//
+//
+//        youTubePlayerView.initialize(object : AbstractYouTubePlayerListener() {
+//            override fun onReady(youTubePlayer: YouTubePlayer) {
+//                this@MovieDetailsFragment.youTubePlayer = youTubePlayer
+//                youTubePlayer.loadVideo(id,0f)
+//
+////                val enterFullscreenButton = findViewById<Button>(R.id.enter_fullscreen_button)
+////                enterFullscreenButton.setOnClickListener {
+////                    youTubePlayer.toggleFullscreen()
+////                }
+//            }
+//        }, iFramePlayerOptions)
+//        lifecycle.addObserver(youTubePlayerView)
+//
+//    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

@@ -5,8 +5,11 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.example.moviecatch.models.Details
+import com.example.moviecatch.models.ExternalIds
 import com.example.moviecatch.models.Genre
 import com.example.moviecatch.models.Movie
+import com.example.moviecatch.models.MovieResult
+import com.example.moviecatch.models.Trailer
 import kotlinx.coroutines.flow.Flow
 import retrofit2.Call
 import retrofit2.Callback
@@ -16,7 +19,7 @@ import javax.inject.Inject
 
 class RetrofitRepository @Inject constructor(private val retrofitServiceInstance: RetrofitServiceInstance) {
 
-    suspend fun getPopularMovies(page: String):Movie? {
+    suspend fun getPopularMovies(page: String): Movie? {
         val response: Response<Movie> = retrofitServiceInstance.getPopularVideos(page)
 
         return if (response.isSuccessful) {
@@ -39,7 +42,7 @@ class RetrofitRepository @Inject constructor(private val retrofitServiceInstance
         })
     }
 
-   suspend fun getRecentMovies(page: String): Movie? {
+    suspend fun getRecentMovies(page: String): Movie? {
         val response: Response<Movie> = retrofitServiceInstance.getRecentVideos(page)
 
         return if (response.isSuccessful) {
@@ -49,12 +52,40 @@ class RetrofitRepository @Inject constructor(private val retrofitServiceInstance
         }
     }
 
-    suspend fun getMovieDetails(id:Int):Details?{
-        val response : Response<Details> = retrofitServiceInstance.getMovieDetails(id)
-        return if(response.isSuccessful){
+    suspend fun getMovieDetails(id: Int): Details? {
+        val response: Response<Details> = retrofitServiceInstance.getMovieDetails(id)
+        return if (response.isSuccessful) {
             return response.body()
+        } else {
+            return null
         }
-        else{
+    }
+
+    suspend fun getMovieTrailers(id: Int): Trailer? {
+        val response: Response<Trailer> = retrofitServiceInstance.getTrailerTeasers(id)
+        return if (response.isSuccessful) {
+            return response.body()
+        } else {
+            return null
+        }
+
+    }
+
+    suspend fun getMovieExternalIds(id: Int): ExternalIds? {
+        val response: Response<ExternalIds> = retrofitServiceInstance.getMovieExternalIds(id)
+        return if (response.isSuccessful) {
+            return response.body()
+        } else {
+            null
+        }
+    }
+
+    suspend fun getMovieById(id: String): MovieResult? {
+        val response: Response<MovieResult> = retrofitServiceInstance.getMovieById(id)
+        return if (response.isSuccessful) {
+            return response.body()
+
+        } else {
             return null
         }
     }
