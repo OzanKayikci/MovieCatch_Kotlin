@@ -22,7 +22,7 @@ https://developer.themoviedb.org/docs
 https://github.com/OzanKayikci/MovieCatch_Kotlin/assets/48061680/855a432b-d911-424b-947d-e780cc087ddd |
 
 
-##Libraries and Tools:
+## Libraries and Tools:
 - Retrofit2
 - Dagger-Hilt
 - Glide
