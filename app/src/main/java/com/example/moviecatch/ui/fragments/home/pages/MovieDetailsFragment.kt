@@ -17,6 +17,7 @@ import com.example.moviecatch.databinding.FragmentMovieDetailsBinding
 import com.example.moviecatch.models.Details
 import com.example.moviecatch.models.MovieResult
 import com.example.moviecatch.ui.customviews.AddFavoritesButton
+import com.example.moviecatch.ui.customviews.AddWatchlistButton
 
 import com.example.moviecatch.ui.fragments.home.pages.moviedetailstabs.DetailsAboutFragment
 import com.example.moviecatch.ui.fragments.home.pages.moviedetailstabs.DetailsCastFragment
@@ -37,7 +38,7 @@ class MovieDetailsFragment : Fragment() {
     private var _binding: FragmentMovieDetailsBinding? = null
 
     private lateinit var favoriteButton: AddFavoritesButton
-    private var watchlistButton: ImageButton? = null
+    private lateinit var watchlistButton: AddWatchlistButton
 
     private val binding get() = _binding!!
     private var movieId: Int = 0
@@ -58,7 +59,7 @@ class MovieDetailsFragment : Fragment() {
         val view = binding.root
 
         favoriteButton = binding.root.findViewById(R.id.add_favorites)
-        watchlistButton = binding.root.findViewById<View>(R.id.add_watchlist) as ImageButton
+        watchlistButton = binding.root.findViewById(R.id.add_watchlist)
 
         movieId = arguments?.getString("id")!!.toInt()
         fetchDetails(movieId)
@@ -92,9 +93,12 @@ class MovieDetailsFragment : Fragment() {
         favoritesViewModel.getChangedMovieObservable()
             .observe(viewLifecycleOwner) { localMovie ->
                 if (localMovie != null) {
-                    favoriteButton.setFavorite(true)
+                    favoriteButton.setFavorite(localMovie.isFavorite)
+                    watchlistButton.setWatchList(localMovie.isInWatchlist)
                 } else {
                     favoriteButton.setFavorite(false)
+                    watchlistButton.setWatchList(false)
+
                 }
             }
         viewModal.getObservableMovieTrailers().observe(viewLifecycleOwner) {
@@ -143,6 +147,7 @@ class MovieDetailsFragment : Fragment() {
         favoritesViewModel.getMovieFromDb(details.id)
 
         favoriteButton.setOnClickListener {
+
             if (!favoriteButton.isFavorite) {
                 favoritesViewModel.addMovieToDb(details, true) { response ->
                     if (response) {
@@ -152,15 +157,33 @@ class MovieDetailsFragment : Fragment() {
                 }
 
             } else {
-                favoritesViewModel.deleteMovieFromDb(details.id) { response ->
+                favoritesViewModel.deleteMovieFromDb(details.id, true) { response ->
                     if (response) {
-                        favoritesViewModel.getMovieFromDb(it.id)
+                        favoriteButton.toggleFavorite()
                     }
                 }
             }
 
         }
 
+        watchlistButton.setOnClickListener {
+            if (!watchlistButton.isWatchlist) {
+                favoritesViewModel.addMovieToDb(details, false) { response ->
+                    if (response) {
+                        watchlistButton.toggleWatchlist()
+                    }
+
+                }
+
+            } else {
+                favoritesViewModel.deleteMovieFromDb(details.id, false) { response ->
+                    if (response) {
+                        watchlistButton.toggleWatchlist()
+                    }
+                }
+            }
+
+        }
     }
 
 //    private fun initTrailerVideo(id:String) {
@@ -188,6 +211,7 @@ class MovieDetailsFragment : Fragment() {
 //        lifecycle.addObserver(youTubePlayerView)
 //
 //    }
+
 
     override fun onDestroyView() {
         super.onDestroyView()

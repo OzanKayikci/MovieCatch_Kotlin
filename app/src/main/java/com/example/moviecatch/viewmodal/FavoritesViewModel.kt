@@ -40,6 +40,10 @@ class FavoritesViewModel @Inject constructor(
         changedMovie.postValue(movieRepository.getMovieById(id))
     }
 
+    private fun getMovieFromDbPrivate(id: Int): MovieData? {
+        return movieRepository.getMovieById(id)
+    }
+
     fun addMovieToDb(movieDetails: Details, isFavorite: Boolean, callback: (Boolean) -> Unit) {
 
 
@@ -55,38 +59,54 @@ class FavoritesViewModel @Inject constructor(
 
         //if isFavorite false then the function called for watchlist
         val favoritesData = MovieData(
-            primary_id = 0,
+            primary_id = if (existMovie !== null) existMovie.primary_id else 0,
             id = movieDetails.id,
             posterPath = movieDetails.poster_path,
             title = movieDetails.title,
             releaseDate = movieDetails.release_date,
             voteAverage = movieDetails.vote_average,
             genresId = movieDetails.genres.map { it -> it.id },
-            isInWatchlist = if (isFavorite) toWatchlist else false,
+            isInWatchlist = if (isFavorite) toWatchlist else true,
             isFavorite = if (isFavorite) true else toFavorite
         )
-        viewModelScope.launch {
-            try {
-                if (existMovie !== null) {
-                    movieRepository.updateMovie(favoritesData)
-                } else {
-                    movieRepository.addMovieToDb(favoritesData)
-                }
-                callback(true)
-            } catch (e: Exception) {
-                callback(false)
+
+        try {
+            if (existMovie !== null) {
+                movieRepository.updateMovie(favoritesData)
+            } else {
+                movieRepository.addMovieToDb(favoritesData)
             }
 
+            callback(true)
+        } catch (e: Exception) {
+            callback(false)
         }
+
 
     }
 
 
-    fun deleteMovieFromDb(id: Int, callback: (Boolean) -> Unit) {
+    fun deleteMovieFromDb(id: Int, fromFavorite: Boolean, callback: (Boolean) -> Unit) {
 
         try {
-            movieRepository.deleteMovie(id)
+
+
+            if (getMovieFromDbPrivate(id)!!.isFavorite && getMovieFromDbPrivate(id)!!.isInWatchlist) {
+                var updatedMovie: MovieData = if (fromFavorite) {
+                    getMovieFromDbPrivate(id)!!.copy(isFavorite = false)
+
+                } else {
+                    getMovieFromDbPrivate(id)!!.copy(isInWatchlist = false)
+
+                }
+                movieRepository.updateMovie(updatedMovie)
+
+            } else {
+                movieRepository.deleteMovie(id)
+            }
+
             callback(true)
+
         } catch (e: Exception) {
             callback(false)
         }

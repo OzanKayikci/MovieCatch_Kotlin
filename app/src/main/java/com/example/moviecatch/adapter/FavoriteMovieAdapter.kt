@@ -23,7 +23,6 @@ import com.example.moviecatch.ui.customviews.AddFavoritesButton
 class FavoriteMovieAdapter(
 
     private val navController: NavController,
-
     ) :
     RecyclerView.Adapter<FavoriteMovieAdapter.MyCustomHolder>() {
 
@@ -96,7 +95,10 @@ class FavoriteMovieAdapter(
 
             val bundle = bundleOf("id" to movie?.id.toString())
 
-            navController.navigate(R.id.action_favoriteFragment_to_movieDetailsFragment, bundle)
+            navController.navigate(
+                R.id.action_favoriteTabsFragment_to_movieDetailsFragment2,
+                bundle
+            )
 
         }
 

@@ -3,17 +3,18 @@
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <ImageButton
+    <com.example.moviecatch.ui.customviews.AddWatchlistButton
         android:id="@+id/add_watchlist"
         android:layout_width="30dp"
         android:layout_height="30dp"
+        android:layout_marginLeft="2dp"
+        android:layout_marginTop="2dp"
         android:alpha="0.5"
         android:background="#00000000"
-        android:scaleX="1.2"
-        android:scaleY="1.2"
-        android:layout_marginLeft="2dp"
-        android:layout_marginTop="3dp"
+        android:scaleX="1"
+        android:scaleY="1"
+        android:translationZ="5dp"
         android:src="@drawable/baseline_playlist_add_24"
-        app:backgroundTint="@null" />
+      />
 </merge>
 

@@ -102,15 +102,14 @@
             <androidx.cardview.widget.CardView
                 android:layout_width="35dp"
                 android:layout_height="35dp"
-                android:layout_marginRight="20dp"
                 android:alpha="1"
                 android:backgroundTint="@color/material_dynamic_neutral10"
                 app:cardCornerRadius="10dp">
 
                 <include
                     layout="@layout/watchlist_button_item"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center" />
             </androidx.cardview.widget.CardView>
 
@@ -130,8 +129,7 @@
                     layout="@layout/favorite_button_item"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
- />
+                    android:layout_gravity="center" />
             </androidx.cardview.widget.CardView>
 
         </LinearLayout>

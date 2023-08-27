@@ -20,21 +20,13 @@ class AddFavoritesButton @JvmOverloads constructor(
     var isFavorite: Boolean = false
         private set
 
-    private var movieResult: MovieResult? = null
-
-    private val onMovieClick: ((MovieResult, Boolean) -> Boolean)? = null
-
 
     fun setFavorite(favorite: Boolean) {
         isFavorite = favorite
         updateView()
     }
 
-    fun bindMovie(movie: MovieResult) {
-        movieResult = movie
-        // Diğer bağlama işlemleri
 
-    }
 
     fun toggleFavorite() {
         isFavorite = !isFavorite

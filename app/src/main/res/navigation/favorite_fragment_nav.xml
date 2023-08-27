@@ -2,22 +2,17 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/favorite_fragment_nav"
-    app:startDestination="@id/favoriteFragment">
-
+    app:startDestination="@id/favoriteTabsFragment">
     <fragment
-        android:id="@+id/favoriteFragment"
-        android:name="com.example.moviecatch.ui.fragments.home.pages.FavoriteFragment"
-        android:label="FavoriteFragment" >
+        android:id="@+id/favoriteTabsFragment"
+        android:name="com.example.moviecatch.ui.fragments.home.pages.FavoriteTabsFragment"
+        android:label="FavoriteTabsFragment" >
         <action
-            android:id="@+id/action_favoriteFragment_to_movieDetailsFragment"
-            app:destination="@id/movieDetailsFragmentFromFavorite"
-            app:enterAnim="@android:anim/fade_in"
-            app:exitAnim="@android:anim/fade_out"
-            app:popEnterAnim="@android:anim/fade_in"
-            app:popExitAnim="@android:anim/fade_out" />
+            android:id="@+id/action_favoriteTabsFragment_to_movieDetailsFragment2"
+            app:destination="@id/movieDetailsFragment2" />
     </fragment>
     <fragment
-        android:id="@+id/movieDetailsFragmentFromFavorite"
+        android:id="@+id/movieDetailsFragment2"
         android:name="com.example.moviecatch.ui.fragments.home.pages.MovieDetailsFragment"
         android:label="MovieDetailsFragment" />
 </navigation>

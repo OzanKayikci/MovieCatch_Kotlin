@@ -1,4 +1,4 @@
-package com.example.moviecatch.ui.fragments.home.pages
+package com.example.moviecatch.ui.fragments.home.pages.favoritestabs
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,24 +6,22 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.moviecatch.R
 import com.example.moviecatch.adapter.FavoriteMovieAdapter
-
 import com.example.moviecatch.databinding.FragmentFavoriteBinding
 import com.example.moviecatch.di.dao.GenreData
 import com.example.moviecatch.viewmodal.FavoritesViewModel
 import com.example.moviecatch.viewmodal.GenreViewModel
-
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class FavoriteFragment:Fragment() {
+class FavoriteFragment constructor(private val navController: NavController):Fragment() {
 
     private var _binding: FragmentFavoriteBinding? = null
 
@@ -82,7 +80,7 @@ class FavoriteFragment:Fragment() {
 
         binding.recentRecyclerView.layoutManager = lmVertical
         favoriteMovieAdapter =
-            FavoriteMovieAdapter(navController = findNavController())
+            FavoriteMovieAdapter(navController = navController)
         binding.recentRecyclerView.adapter = favoriteMovieAdapter
     }
 
@@ -92,9 +90,4 @@ class FavoriteFragment:Fragment() {
         }
     }
 
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
 }
