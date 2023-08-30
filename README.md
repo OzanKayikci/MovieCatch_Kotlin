@@ -1,7 +1,7 @@
 # MovieCatch_Kotlin
 
 This is my fourth Kotlin projects. 
-A simple project developed with <b>Kotlin</b>, where you can list movies in Movie Db, view details and save them as favorites and watchlist (locally).
+A simple project developed with <b>Kotlin</b>, where you can list movies in Movie Db, view details and save them as favorites and watchlist (locally-firebase).
 
 <br/>--><B>MVVM</B> Architecture
 
@@ -31,11 +31,12 @@ https://github.com/OzanKayikci/MovieCatch_Kotlin/assets/48061680/68693132-dcea-4
 - Paging
 - DataBinding
 - NavController
+- Firebase
   
 
 ### Achievements:
 - MVVM architecture
-- Depencey Injection (Logic of dagger hilt)
+- Dependency Injection (Logic of dagger hilt)
 - Working with MutableLiveData
 - Store and read data with room
 - Endless Scroll with paging 
@@ -46,7 +47,8 @@ https://github.com/OzanKayikci/MovieCatch_Kotlin/assets/48061680/68693132-dcea-4
 - Observable Pattern (Working with Observable functions)
 - Usage of Navigation(navComponent)
 - Singleton Pattern (Companion Object)
-- Scoope Functions
-- Extention Functions
+- Scope Functions
+- Extension Functions
+- Firebase Authentication
 
 
