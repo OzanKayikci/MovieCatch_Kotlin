@@ -11,17 +11,23 @@ import androidx.navigation.fragment.findNavController
 import com.example.moviecatch.R
 import com.example.moviecatch.databinding.FragmentSplashBinding
 import com.example.moviecatch.prefs.SessionManager
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class SplashFragment : Fragment() {
     private var _binding: FragmentSplashBinding? = null
+
     // This property is only valid between onCreateView and onDestroyView.
-     val binding get() = _binding!!
+    val binding get() = _binding!!
+
+    private lateinit var auth: FirebaseAuth
 
     @Inject
-    lateinit var  sessionManager: SessionManager
+    lateinit var sessionManager: SessionManager
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -30,12 +36,20 @@ class SplashFragment : Fragment() {
     ): View? {
         _binding = FragmentSplashBinding.inflate(inflater, container, false)
 
+        auth = Firebase.auth
         Handler(Looper.getMainLooper()).postDelayed({
-          if(sessionManager.isFirstRun){
-              findNavController().navigate(R.id.action_splashFragment_to_appIntroFragment)
-          }else{
-              findNavController().navigate(R.id.action_splashFragment_to_mainFragment)
-          }
+            if (sessionManager.isFirstRun) {
+                findNavController().navigate(R.id.action_splashFragment_to_appIntroFragment)
+            } else {
+                findNavController().navigate(
+                    if (auth.currentUser !== null)
+                        R.id.action_splashFragment_to_mainFragment
+                    else
+                        R.id.action_splashFragment_to_singInFragment
+
+                )
+
+            }
         }, 1000)
         return binding.root
     }

@@ -1,4 +1,5 @@
 package com.example.moviecatch.ui.fragments.appintro.tabs
+
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -14,6 +15,9 @@ import com.example.moviecatch.di.dao.GenreData
 import com.example.moviecatch.util.StringHelper
 import com.example.moviecatch.viewmodal.GenreViewModel
 import com.example.moviecatch.viewmodal.HomePageViewModel
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -23,7 +27,7 @@ class FifthScreen : Fragment() {
     private val binding get() = _binding!!
     private lateinit var genreViewModel: GenreViewModel
     private lateinit var homePageViewModel: HomePageViewModel
-
+    private lateinit var auth: FirebaseAuth
     private var stringHelper: StringHelper? = null
     private var genreList: MutableList<GenreData>? = null
     override fun onCreateView(
@@ -36,13 +40,12 @@ class FifthScreen : Fragment() {
         stringHelper = StringHelper()
         homePageViewModel = ViewModelProvider(this).get(HomePageViewModel::class.java)
         genreViewModel = ViewModelProvider(this).get(GenreViewModel::class.java)
-
+        auth = Firebase.auth
         setupGenreList()
         setupButtonClick()
 
         return view
     }
-
 
 
     override fun onResume() {
@@ -109,6 +112,10 @@ class FifthScreen : Fragment() {
     }
 
     private fun navigateToMainFragment() {
-        findNavController().navigate(R.id.action_appIntroFragment_to_mainFragment)
+        if (auth.currentUser !== null) {
+            findNavController().navigate(R.id.action_appIntroFragment_to_mainFragment)
+
+        } else
+            findNavController().navigate(R.id.action_appIntroFragment_to_singInFragment)
     }
 }

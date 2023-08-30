@@ -12,6 +12,9 @@
             android:id="@+id/action_splashFragment_to_appIntroFragment"
             app:destination="@id/appIntroFragment" />
         <action
+            android:id="@+id/action_splashFragment_to_singInFragment"
+            app:destination="@id/singInFragment" />
+        <action
             android:id="@+id/action_splashFragment_to_mainFragment"
             app:destination="@id/mainFragment" />
     </fragment>
@@ -20,6 +23,9 @@
         android:name="com.example.moviecatch.ui.fragments.appintro.AppIntroFragment"
         android:label="AppIntroFragment" >
         <action
+            android:id="@+id/action_appIntroFragment_to_singInFragment"
+            app:destination="@id/singInFragment" />
+        <action
             android:id="@+id/action_appIntroFragment_to_mainFragment"
             app:destination="@id/mainFragment" />
     </fragment>
@@ -27,4 +33,34 @@
         android:id="@+id/mainFragment"
         android:name="com.example.moviecatch.ui.fragments.home.MainFragment"
         android:label="MainFragment" />
+    <fragment
+        android:id="@+id/singInFragment"
+        android:name="com.example.moviecatch.ui.fragments.auth.SingInFragment"
+        android:label="SingInFragment" >
+        <action
+            android:id="@+id/action_singInFragment_to_singUpFragment"
+            app:destination="@id/singUpFragment" />
+        <action
+            android:id="@+id/action_singInFragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
+        <action
+            android:id="@+id/action_singInFragment_to_resetPasswordFragment"
+            app:destination="@id/resetPasswordFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/singUpFragment"
+        android:name="com.example.moviecatch.ui.fragments.auth.SingUpFragment"
+        android:label="SingUpFragment" >
+        <action
+            android:id="@+id/action_singUpFragment_to_singInFragment"
+            app:destination="@id/singInFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/resetPasswordFragment"
+        android:name="com.example.moviecatch.ui.fragments.auth.ResetPasswordFragment"
+        android:label="ResetPasswordFragment" >
+        <action
+            android:id="@+id/action_resetPasswordFragment_to_singInFragment"
+            app:destination="@id/singInFragment" />
+    </fragment>
 </navigation>
