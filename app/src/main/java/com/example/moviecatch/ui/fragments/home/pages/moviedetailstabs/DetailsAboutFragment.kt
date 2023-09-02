@@ -24,7 +24,6 @@ class DetailsAboutFragment constructor(private val details: Details) : Fragment(
     private val binding get() = _binding!!
 
     private lateinit var genreAdapter: GenreAdapter
-    private val viewModal: MovieDetailsViewModel by viewModels()
 
 
     override fun onCreateView(
@@ -49,10 +48,6 @@ class DetailsAboutFragment constructor(private val details: Details) : Fragment(
         binding.txtVoteAverage.text = details.vote_average.toString() + "/ 10"
         binding.voteCount.text = "(${details.vote_count})"
 
-        viewModal.getObservableMovieTrailers().observe(viewLifecycleOwner) {
-//            initTrailerVideo(it.results[0].key)
-
-        }
     }
 
     private fun initRecyclerViews() {

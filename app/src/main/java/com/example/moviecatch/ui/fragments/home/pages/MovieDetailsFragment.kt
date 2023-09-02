@@ -131,7 +131,7 @@ class MovieDetailsFragment : Fragment() {
         val fragmentList = arrayListOf<Fragment>(
             DetailsAboutFragment(details),
             DetailsTrailersFragment(details.id),
-            DetailsCastFragment(),
+            DetailsCastFragment(details.id),
         )
         val adapter =
             ViewPagerAdapter(fragmentList, requireActivity().supportFragmentManager, lifecycle)

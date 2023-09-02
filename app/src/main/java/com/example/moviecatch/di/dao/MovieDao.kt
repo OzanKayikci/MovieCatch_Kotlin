@@ -3,25 +3,36 @@ package com.example.moviecatch.di.dao
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
 
 @Dao
 interface MovieDao {
     @Insert
-    fun  addFavoriteMovie(movie:MovieData)
+    fun addFavoriteMovie(movie: MovieData)
+
     @Insert
-    fun  addWatchlistMovie(movie:MovieData)
+    fun addWatchlistMovie(movie: MovieData)
+
+    @Insert
+    fun addAllMovies(movies: List<MovieData>)
+
     @Query("SELECT * FROM movies WHERE isFavorite = 1")
-    suspend fun readAllFavorites():List<MovieData>
+    suspend fun readAllFavorites(): List<MovieData>
+
     @Query("SELECT * FROM movies WHERE isInWatchlist = 1")
-    fun readAllWatchlist():List<MovieData>
+    fun readAllWatchlist(): List<MovieData>
+
+    @Query("SELECT * FROM movies")
+    suspend fun getAllStoredMovies(): List<MovieData>
 
     @Query("SELECT * FROM movies WHERE id = :movieId")
     fun getMovieById(movieId: Int): MovieData?
 
     @Update
     fun updateMovie(movie: MovieData)
+
     @Query("DELETE FROM movies WHERE id = :movieId")
     fun deleteMovie(movieId: Int)
 }

@@ -12,10 +12,17 @@ class MovieRepository @Inject constructor(private val movieDao: MovieDao) {
 
     }
 
+    suspend fun getAllStoredMovies(): List<MovieData> {
+        return movieDao.getAllStoredMovies()
+    }
+
     fun addMovieToDb(movie: MovieData) {
         movieDao.addFavoriteMovie(movie)
     }
 
+    fun addALlMoviesToDb(movies: List<MovieData>) {
+        movieDao.addAllMovies(movies)
+    }
 
     fun getMovieById(id: Int): MovieData? {
         return movieDao.getMovieById(id)

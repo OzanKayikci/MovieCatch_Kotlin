@@ -1,5 +1,6 @@
 package com.example.moviecatch.viewmodal
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -24,6 +25,7 @@ class FavoritesViewModel @Inject constructor(
 
     private var favoriteMovies: MutableLiveData<List<MovieData>> = MutableLiveData()
     private var watchlistMovies: MutableLiveData<List<MovieData>> = MutableLiveData()
+    private var allMovies: MutableLiveData<List<MovieData>> = MutableLiveData()
 
     private var changedMovie: MutableLiveData<MovieData> = MutableLiveData()
 
@@ -34,6 +36,10 @@ class FavoritesViewModel @Inject constructor(
 
     suspend fun getWatchlistMoviesFromDb() {
         watchlistMovies.postValue(movieRepository.readMoviesFromDb(false))
+    }
+
+    suspend fun getAllMoviesFromDb() {
+        allMovies.postValue(movieRepository.getAllStoredMovies())
     }
 
     fun getMovieFromDb(id: Int) {
@@ -85,6 +91,15 @@ class FavoritesViewModel @Inject constructor(
 
     }
 
+    fun addAllMovieToDb(movies: List<MovieData>, callback: (Boolean) -> Unit) {
+        try {
+            movieRepository.addALlMoviesToDb(movies)
+            callback(true)
+        } catch (e: Exception) {
+            Log.d("room error", e.message.toString())
+            callback(false)
+        }
+    }
 
     fun deleteMovieFromDb(id: Int, fromFavorite: Boolean, callback: (Boolean) -> Unit) {
 
@@ -120,6 +135,10 @@ class FavoritesViewModel @Inject constructor(
 
     fun getWatchlistObservable(): MutableLiveData<List<MovieData>> {
         return watchlistMovies
+    }
+
+    fun getAllStoredMoviesObserve(): MutableLiveData<List<MovieData>> {
+        return allMovies
     }
 
     fun getChangedMovieObservable(): MutableLiveData<MovieData> {

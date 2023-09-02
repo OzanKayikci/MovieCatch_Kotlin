@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
+import com.example.moviecatch.models.Credits
 import com.example.moviecatch.models.Details
 import com.example.moviecatch.models.ExternalIds
 import com.example.moviecatch.models.Genre
@@ -69,6 +70,15 @@ class RetrofitRepository @Inject constructor(private val retrofitServiceInstance
             return null
         }
 
+    }
+
+    suspend fun getMovieCredits(id: Int): Credits? {
+        val response: Response<Credits> = retrofitServiceInstance.getMovieCredits(id)
+        return if (response.isSuccessful) {
+            response.body()
+        } else {
+            null
+        }
     }
 
     suspend fun getMovieExternalIds(id: Int): ExternalIds? {

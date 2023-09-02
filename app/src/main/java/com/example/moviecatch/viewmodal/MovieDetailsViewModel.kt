@@ -3,6 +3,7 @@ package com.example.moviecatch.viewmodal
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.moviecatch.di.retrofit.RetrofitRepository
+import com.example.moviecatch.models.Credits
 import com.example.moviecatch.models.Details
 import com.example.moviecatch.models.Trailer
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -12,8 +13,9 @@ import javax.inject.Inject
 class MovieDetailsViewModel @Inject constructor(private val repository: RetrofitRepository) :
     ViewModel() {
 
-   private var details: MutableLiveData<Details> = MutableLiveData()
+    private var details: MutableLiveData<Details> = MutableLiveData()
     private var trailers: MutableLiveData<Trailer> = MutableLiveData()
+    private var credits: MutableLiveData<Credits> = MutableLiveData()
 
     fun getObservableMovieDetails(): MutableLiveData<Details> {
         return details
@@ -21,6 +23,10 @@ class MovieDetailsViewModel @Inject constructor(private val repository: Retrofit
 
     fun getObservableMovieTrailers(): MutableLiveData<Trailer> {
         return trailers
+    }
+
+    fun getObservableMovieCredit(): MutableLiveData<Credits> {
+        return credits
     }
 
     suspend fun getMovieDetails(id: Int) {
@@ -33,5 +39,9 @@ class MovieDetailsViewModel @Inject constructor(private val repository: Retrofit
         trailers.postValue(
             repository.getMovieTrailers(id)
         )
+    }
+
+    suspend fun getMovieCredits(id: Int) {
+        credits.postValue(repository.getMovieCredits(id))
     }
 }
