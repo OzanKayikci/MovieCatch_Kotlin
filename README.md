@@ -10,9 +10,14 @@ https://developer.themoviedb.org/docs
 
 ## Sceenshots
 
-| Main Page                           | Movie Detail -About                 | Movie Detail - Trailers      |
+| SignIn Page                         | Main Page                           | Favorites Page                     |
 | ----------------------------------- | ----------------------------------- |----------------------------------- |
-|![Screenshot_20230827_102937_Movies](https://github.com/OzanKayikci/MovieCatch_Kotlin/assets/48061680/1cf139ec-3072-4fe0-94fc-c80ecabc734f) |![Screenshot_20230827_110103_Movies](https://github.com/OzanKayikci/MovieCatch_Kotlin/assets/48061680/f4a8fa6c-52b4-440c-94f3-faa37b0b5d9f) |![Screenshot_20230827_110116_Movies](https://github.com/OzanKayikci/MovieCatch_Kotlin/assets/48061680/3195a685-efae-4275-9b04-058a71cf8012) |
+|![Screenshot_20230902_152026_Movies](https://github.com/OzanKayikci/MovieCatch_Kotlin/assets/48061680/de91cd66-f8bb-41cb-8371-61e759f743c1) |![Screenshot_20230827_102937_Movies](https://github.com/OzanKayikci/MovieCatch_Kotlin/assets/48061680/1cf139ec-3072-4fe0-94fc-c80ecabc734f)  |![Screenshot_20230902_152058_Movies](https://github.com/OzanKayikci/MovieCatch_Kotlin/assets/48061680/a6cc07b3-04a4-41b5-b90f-e2ddffb18f73)|
+| Movie Detail -About                 | Movie Detail - Trailers              | Movie Detail - Cast               |                         
+| ----------------------------------- | ----------------------------------- |----------------------------------- |
+|![Screenshot_20230827_110103_Movies](https://github.com/OzanKayikci/MovieCatch_Kotlin/assets/48061680/f4a8fa6c-52b4-440c-94f3-faa37b0b5d9f) |![Screenshot_20230827_110116_Movies](https://github.com/OzanKayikci/MovieCatch_Kotlin/assets/48061680/3195a685-efae-4275-9b04-058a71cf8012) |![Screenshot_20230902_152137_Movies](https://github.com/OzanKayikci/MovieCatch_Kotlin/assets/48061680/0289a446-aa33-4afe-8ef7-dd61d16c4a9e)|
+
+
 
 https://github.com/OzanKayikci/MovieCatch_Kotlin/assets/48061680/709cb86a-c167-46a1-a472-6d8b9554e6db
 
@@ -29,6 +34,7 @@ https://github.com/OzanKayikci/MovieCatch_Kotlin/assets/48061680/68693132-dcea-4
 - LifeCycle
 - Room
 - Paging
+- ViewPager2
 - DataBinding
 - NavController
 - Firebase
@@ -49,6 +55,10 @@ https://github.com/OzanKayikci/MovieCatch_Kotlin/assets/48061680/68693132-dcea-4
 - Singleton Pattern (Companion Object)
 - Scope Functions
 - Extension Functions
+- Higher-Order Functions
+- ViewPager2 usage
+- TabLayout usage
 - Firebase Authentication
+- Firebase Realtime Database
 
 
