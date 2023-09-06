@@ -48,6 +48,10 @@ class WatchlistFragment constructor(private val navController: NavController) : 
         observerFunctions()
         return binding.root
     }
+    override fun onResume() {
+        super.onResume()
+        fetchMovies()
+    }
 
     private fun observerFunctions() {
 

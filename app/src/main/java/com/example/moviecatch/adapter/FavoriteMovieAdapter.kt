@@ -23,7 +23,7 @@ import com.example.moviecatch.ui.customviews.AddFavoritesButton
 class FavoriteMovieAdapter(
 
     private val navController: NavController,
-    ) :
+) :
     RecyclerView.Adapter<FavoriteMovieAdapter.MyCustomHolder>() {
 
     private var favoriteMovies: List<MovieData>? = null;

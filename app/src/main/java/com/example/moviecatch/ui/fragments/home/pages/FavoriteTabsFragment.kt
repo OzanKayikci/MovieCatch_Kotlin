@@ -20,6 +20,7 @@ import com.example.moviecatch.adapter.FavoriteMovieAdapter
 import com.example.moviecatch.adapter.ViewPagerAdapter
 
 import com.example.moviecatch.databinding.FragmentFavoriteTabsBinding
+import com.example.moviecatch.di.dao.FirebaseResponse
 import com.example.moviecatch.di.dao.GenreData
 import com.example.moviecatch.di.dao.MovieData
 import com.example.moviecatch.models.Details
@@ -29,6 +30,7 @@ import com.example.moviecatch.ui.fragments.home.pages.moviedetailstabs.DetailsAb
 import com.example.moviecatch.ui.fragments.home.pages.moviedetailstabs.DetailsCastFragment
 import com.example.moviecatch.ui.fragments.home.pages.moviedetailstabs.DetailsTrailersFragment
 import com.example.moviecatch.viewmodal.FavoritesViewModel
+import com.example.moviecatch.viewmodal.FirebaseViewModel
 import com.example.moviecatch.viewmodal.GenreViewModel
 import com.google.android.material.tabs.TabLayoutMediator
 import com.google.firebase.auth.ktx.auth
@@ -58,7 +60,9 @@ class FavoriteTabsFragment : Fragment() {
     private val favoritesViewModel by lazy {
         ViewModelProvider(this, defaultViewModelProviderFactory)[FavoritesViewModel::class.java]
     }
-
+    private val firebaseViewModel by lazy {
+        ViewModelProvider(this, defaultViewModelProviderFactory)[FirebaseViewModel::class.java]
+    }
 
     private val fromBottomFabAnim: Animation by lazy {
         AnimationUtils.loadAnimation(requireContext(), R.anim.from_bottom_fab)
@@ -184,98 +188,53 @@ class FavoriteTabsFragment : Fragment() {
     }
 
     private fun pushToFirebase(movies: List<MovieData>) {
-        val gson = Gson()
-        val moviesJson = gson.toJson(movies)
+
         val database = Firebase.database
-        val moviesRef = database.getReference("FavoriteMovies")
+        firebaseViewModel.pushMoviesToFireBase(database, movies) { response, message ->
+            Toast.makeText(requireContext(), message, Toast.LENGTH_LONG).show()
 
-        moviesRef.child(Firebase.auth.uid!!).setValue(moviesJson)
-            .addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    Log.d("Firebase", "Data saved successfully")
-                    Toast.makeText(requireContext(), "Successfully Saved", Toast.LENGTH_LONG).show()
-                } else {
-                    val errorMessage = task.exception?.message ?: "Unknown error"
-                    Log.e("Firebase", "Error: $errorMessage")
-                    Toast.makeText(requireContext(), errorMessage, Toast.LENGTH_LONG).show()
-                }
-            }
-
-        Log.d("json data", moviesJson)
+        }
     }
 
     private fun fetchFromFirebase(existMovies: List<MovieData>) {
         val database = Firebase.database
-        val moviesRef = database.getReference("FavoriteMovies")
-
-        moviesRef.child(Firebase.auth.uid!!)
-            .addListenerForSingleValueEvent(object : ValueEventListener {
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    if (snapshot.exists()) {
-                        try {
-                            Log.d("snapshot", snapshot.toString())
-                            val moviesString = snapshot.getValue(String::class.java)
-                            Log.d("movieString", moviesString.toString())
-                            val gson = Gson()
-                            val movieDataListType = object : TypeToken<List<MovieData>>() {}.type
-                            val movieDataList =
-                                gson.fromJson<List<MovieData>>(moviesString, movieDataListType)
-
-                            saveToLocalFromFirebase(movieDataList, existMovies)
-                        } catch (e: Exception) {
-                            Log.e("Gson Parsing Error", e.toString())
-                            Toast.makeText(requireContext(), "Error", Toast.LENGTH_LONG).show()
-                        }
-                    } else {
-                        Toast.makeText(
-                            requireContext(),
-                            "There is no data to retrieve",
-                            Toast.LENGTH_LONG
-                        ).show()
-                    }
+        firebaseViewModel.fetchFromFirebase(database) { response ->
+            when (response) {
+                is FirebaseResponse.StringResponse -> {
+                    Toast.makeText(requireContext(), response.stringValue, Toast.LENGTH_LONG).show()
                 }
 
-                override fun onCancelled(error: DatabaseError) {
-                    Toast.makeText(
-                        requireContext(),
-                        error.message,
-                        Toast.LENGTH_LONG
-                    ).show()
+                is FirebaseResponse.MovieDataResponse -> {
+                    saveToLocalFromFirebase(response.movieDataList, existMovies)
                 }
+            }
+        }
 
-            })
+
     }
 
     private fun saveToLocalFromFirebase(movies: List<MovieData>, existMovies: List<MovieData>) {
 
-        val newMovies = mutableListOf<MovieData>()
-
-        for (firebaseMovie in movies) {
-            // Check if the Firebase data already exists in Room
-            val existingMovie = existMovies.find { it.id == firebaseMovie.id }
-
-            if (existingMovie == null) {
-                // Data doesn't exist in Room, so add it to the list of new movies
-                newMovies.add(firebaseMovie)
+        firebaseViewModel.saveToLocalFromFirebase(movies, existMovies) { response, newMovies ->
+            if (!response) {
+                Log.d("movies", "already up to date")
+                Toast.makeText(requireContext(), "Movies already up up-to-date", Toast.LENGTH_LONG)
+                    .show()
+                return@saveToLocalFromFirebase
             }
-        }
-
-        if (newMovies.isNotEmpty()) {
-            // Insert the new movies into the Room database
-            favoritesViewModel.addAllMovieToDb(newMovies) {
+            favoritesViewModel.addAllMovieToDb(newMovies!!) {
                 if (it) {
                     Log.d("movies", newMovies.toString())
 
-                    Toast.makeText(requireContext(), "Successfully Retrieved", Toast.LENGTH_LONG).show()
+                    Toast.makeText(requireContext(), "Successfully Retrieved", Toast.LENGTH_LONG)
+                        .show()
                 } else {
                     Toast.makeText(requireContext(), "Storing Error", Toast.LENGTH_LONG).show()
 
                 }
             }
-        } else {
-            Log.d("movies", "already up to date")
-            Toast.makeText(requireContext(), "Movies already up up-to-date", Toast.LENGTH_LONG).show()
         }
+
 
     }
 

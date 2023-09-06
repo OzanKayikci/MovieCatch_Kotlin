@@ -21,7 +21,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class FavoriteFragment constructor(private val navController: NavController):Fragment() {
+class FavoriteFragment constructor(private val navController: NavController) : Fragment() {
 
     private var _binding: FragmentFavoriteBinding? = null
 
@@ -69,6 +69,10 @@ class FavoriteFragment constructor(private val navController: NavController):Fra
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        fetchMovies()
+    }
 
     private fun initRecyclerViews() {
 
