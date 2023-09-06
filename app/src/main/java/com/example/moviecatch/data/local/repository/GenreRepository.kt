@@ -1,6 +1,7 @@
-package com.example.moviecatch.di.dao
+package com.example.moviecatch.data.local.repository
 
-import androidx.lifecycle.LiveData
+import com.example.moviecatch.data.local.dao.GenreDao
+import com.example.moviecatch.data.local.entities.GenreData
 import javax.inject.Inject
 
 class GenreRepository @Inject constructor(private val genreDao: GenreDao) {

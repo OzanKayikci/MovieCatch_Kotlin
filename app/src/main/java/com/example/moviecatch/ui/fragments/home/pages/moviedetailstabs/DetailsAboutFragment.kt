@@ -10,7 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
-import com.example.moviecatch.adapter.GenreAdapter
+import com.example.moviecatch.ui.adapter.GenreAdapter
 import com.example.moviecatch.databinding.FragmentDetailsAboutBinding
 import com.example.moviecatch.databinding.FragmentMovieDetailsBinding
 import com.example.moviecatch.models.Details

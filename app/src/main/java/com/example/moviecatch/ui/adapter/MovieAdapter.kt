@@ -1,4 +1,4 @@
-package com.example.moviecatch.adapter
+package com.example.moviecatch.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.View
@@ -10,7 +10,7 @@ import androidx.navigation.NavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.moviecatch.R
-import com.example.moviecatch.di.dao.GenreData
+import com.example.moviecatch.data.local.entities.GenreData
 import com.example.moviecatch.models.MovieResult
 
 class MovieAdapter(

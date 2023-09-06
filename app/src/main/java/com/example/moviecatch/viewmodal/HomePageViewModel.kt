@@ -2,13 +2,10 @@ package com.example.moviecatch.viewmodal
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.paging.PagingConfig
-import androidx.paging.PagingData
-import com.example.moviecatch.di.retrofit.RetrofitRepository
+import com.example.moviecatch.data.remote.repository.RetrofitRepository
 import com.example.moviecatch.models.Genre
 import com.example.moviecatch.models.Movie
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 @HiltViewModel

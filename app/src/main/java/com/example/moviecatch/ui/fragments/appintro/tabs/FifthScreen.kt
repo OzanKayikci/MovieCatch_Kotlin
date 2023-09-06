@@ -11,7 +11,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.widget.ViewPager2
 import com.example.moviecatch.R
 import com.example.moviecatch.databinding.FragmentFifthBinding
-import com.example.moviecatch.di.dao.GenreData
+import com.example.moviecatch.data.local.entities.GenreData
 import com.example.moviecatch.util.StringHelper
 import com.example.moviecatch.viewmodal.GenreViewModel
 import com.example.moviecatch.viewmodal.HomePageViewModel

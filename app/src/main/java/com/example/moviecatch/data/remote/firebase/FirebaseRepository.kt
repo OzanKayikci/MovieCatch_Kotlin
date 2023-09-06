@@ -1,7 +1,6 @@
-package com.example.moviecatch.di.dao
+package com.example.moviecatch.data.remote.firebase
 
 import android.util.Log
-import android.widget.Toast
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError

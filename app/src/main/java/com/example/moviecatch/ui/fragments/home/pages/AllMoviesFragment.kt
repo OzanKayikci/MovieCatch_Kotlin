@@ -9,20 +9,12 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.moviecatch.adapter.AllMoviesAdapter
-import com.example.moviecatch.adapter.MovieAdapter
-import com.example.moviecatch.adapter.RecentMovieAdapter
+import com.example.moviecatch.ui.adapter.AllMoviesAdapter
 import com.example.moviecatch.databinding.FragmentAllBinding
-import com.example.moviecatch.di.dao.GenreData
+import com.example.moviecatch.data.local.entities.GenreData
 import com.example.moviecatch.viewmodal.AllMoviesViewModel
 import com.example.moviecatch.viewmodal.GenreViewModel
-import com.example.moviecatch.viewmodal.HomePageViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Deferred
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint

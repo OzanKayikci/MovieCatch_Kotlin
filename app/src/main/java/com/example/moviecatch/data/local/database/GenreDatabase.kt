@@ -1,9 +1,11 @@
-package com.example.moviecatch.di.dao
+package com.example.moviecatch.data.local.database
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.example.moviecatch.data.local.dao.GenreDao
+import com.example.moviecatch.data.local.entities.GenreData
 
 @Database(entities = [GenreData::class], version = 1, exportSchema = false)
 abstract class GenreDatabase : RoomDatabase() {

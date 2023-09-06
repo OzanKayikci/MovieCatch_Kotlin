@@ -1,12 +1,12 @@
-package com.example.moviecatch.paging
+package com.example.moviecatch.data.remote.paging
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.example.moviecatch.di.retrofit.RetrofitRepository
+import com.example.moviecatch.data.remote.repository.RetrofitRepository
 import com.example.moviecatch.models.MovieResult
 import java.lang.Exception
 
-class MoviesPagingSource(private val repository: RetrofitRepository,private  val movieType:String) : PagingSource<Int, MovieResult>() {
+class MoviesPagingSource(private val repository: RetrofitRepository, private  val movieType:String) : PagingSource<Int, MovieResult>() {
 
     //TODO: ERROR -> when scrolling down after multiple times there is an error about "StringIndexOutOfBoundsException" -->java.lang.StringIndexOutOfBoundsException: begin 0, end -3, length 0
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, MovieResult> {

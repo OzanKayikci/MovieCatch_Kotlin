@@ -9,7 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.moviecatch.adapter.TrailersAdapter
+import com.example.moviecatch.ui.adapter.TrailersAdapter
 import com.example.moviecatch.databinding.FragmentDetailsTrailersBinding
 import com.example.moviecatch.viewmodal.MovieDetailsViewModel
 import dagger.hilt.android.AndroidEntryPoint

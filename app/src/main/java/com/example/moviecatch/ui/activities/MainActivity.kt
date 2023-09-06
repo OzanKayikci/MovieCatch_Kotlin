@@ -1,4 +1,4 @@
-package com.example.moviecatch
+package com.example.moviecatch.ui.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

@@ -1,4 +1,4 @@
-package com.example.moviecatch.di.dao
+package com.example.moviecatch.data.local.entities
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

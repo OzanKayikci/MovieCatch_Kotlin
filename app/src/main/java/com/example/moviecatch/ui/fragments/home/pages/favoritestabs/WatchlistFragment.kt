@@ -7,11 +7,10 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.moviecatch.adapter.FavoriteMovieAdapter
+import com.example.moviecatch.ui.adapter.FavoriteMovieAdapter
 import com.example.moviecatch.databinding.FragmentFavoriteBinding
-import com.example.moviecatch.di.dao.GenreData
+import com.example.moviecatch.data.local.entities.GenreData
 import com.example.moviecatch.viewmodal.FavoritesViewModel
 import com.example.moviecatch.viewmodal.GenreViewModel
 import dagger.hilt.android.AndroidEntryPoint

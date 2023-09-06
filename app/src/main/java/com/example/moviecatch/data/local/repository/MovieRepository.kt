@@ -1,5 +1,7 @@
-package com.example.moviecatch.di.dao
+package com.example.moviecatch.data.local.repository
 
+import com.example.moviecatch.data.local.dao.MovieDao
+import com.example.moviecatch.data.local.entities.MovieData
 import javax.inject.Inject
 
 class MovieRepository @Inject constructor(private val movieDao: MovieDao) {

@@ -1,10 +1,8 @@
 package com.example.moviecatch.ui.fragments.home.pages
 
-import android.graphics.Rect
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.Animation
@@ -14,39 +12,21 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.moviecatch.R
-import com.example.moviecatch.adapter.FavoriteMovieAdapter
-import com.example.moviecatch.adapter.ViewPagerAdapter
+import com.example.moviecatch.ui.adapter.ViewPagerAdapter
 
 import com.example.moviecatch.databinding.FragmentFavoriteTabsBinding
-import com.example.moviecatch.di.dao.FirebaseResponse
-import com.example.moviecatch.di.dao.GenreData
-import com.example.moviecatch.di.dao.MovieData
-import com.example.moviecatch.models.Details
+import com.example.moviecatch.data.remote.firebase.FirebaseResponse
+import com.example.moviecatch.data.local.entities.MovieData
 import com.example.moviecatch.ui.fragments.home.pages.favoritestabs.FavoriteFragment
 import com.example.moviecatch.ui.fragments.home.pages.favoritestabs.WatchlistFragment
-import com.example.moviecatch.ui.fragments.home.pages.moviedetailstabs.DetailsAboutFragment
-import com.example.moviecatch.ui.fragments.home.pages.moviedetailstabs.DetailsCastFragment
-import com.example.moviecatch.ui.fragments.home.pages.moviedetailstabs.DetailsTrailersFragment
 import com.example.moviecatch.viewmodal.FavoritesViewModel
 import com.example.moviecatch.viewmodal.FirebaseViewModel
-import com.example.moviecatch.viewmodal.GenreViewModel
 import com.google.android.material.tabs.TabLayoutMediator
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Deferred
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint

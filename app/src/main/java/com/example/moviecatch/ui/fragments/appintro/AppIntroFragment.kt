@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.example.moviecatch.adapter.ViewPagerAdapter
+import com.example.moviecatch.ui.adapter.ViewPagerAdapter
 import com.example.moviecatch.databinding.FragmentAppintroBinding
 import com.example.moviecatch.ui.fragments.appintro.tabs.FifthScreen
 import com.example.moviecatch.ui.fragments.appintro.tabs.FirstScreen

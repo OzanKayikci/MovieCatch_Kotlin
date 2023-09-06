@@ -1,12 +1,9 @@
 package com.example.moviecatch.viewmodal
 
-import android.util.Log
-import android.widget.Toast
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.moviecatch.di.dao.FirebaseRepository
-import com.example.moviecatch.di.dao.FirebaseResponse
-import com.example.moviecatch.di.dao.MovieData
+import com.example.moviecatch.data.remote.firebase.FirebaseRepository
+import com.example.moviecatch.data.remote.firebase.FirebaseResponse
+import com.example.moviecatch.data.local.entities.MovieData
 import com.google.firebase.database.FirebaseDatabase
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -49,9 +46,9 @@ class FirebaseViewModel @Inject constructor(
     }
 
      fun saveToLocalFromFirebase(
-        movies: List<MovieData>,
-        existMovies: List<MovieData>,
-        callback: (Boolean,MutableList<MovieData>?) -> Unit
+         movies: List<MovieData>,
+         existMovies: List<MovieData>,
+         callback: (Boolean,MutableList<MovieData>?) -> Unit
     ) {
 
         val newMovies = mutableListOf<MovieData>()

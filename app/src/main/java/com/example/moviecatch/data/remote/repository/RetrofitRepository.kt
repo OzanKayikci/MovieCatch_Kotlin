@@ -1,9 +1,7 @@
-package com.example.moviecatch.di.retrofit
+package com.example.moviecatch.data.remote.repository
 
 import androidx.lifecycle.MutableLiveData
-import androidx.paging.Pager
-import androidx.paging.PagingConfig
-import androidx.paging.PagingData
+import com.example.moviecatch.data.remote.api.RetrofitServiceInstance
 import com.example.moviecatch.models.Credits
 import com.example.moviecatch.models.Details
 import com.example.moviecatch.models.ExternalIds
@@ -11,7 +9,6 @@ import com.example.moviecatch.models.Genre
 import com.example.moviecatch.models.Movie
 import com.example.moviecatch.models.MovieResult
 import com.example.moviecatch.models.Trailer
-import kotlinx.coroutines.flow.Flow
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

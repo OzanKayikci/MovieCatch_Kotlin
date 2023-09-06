@@ -1,4 +1,4 @@
-package com.example.moviecatch.di.dao
+package com.example.moviecatch.data.local
 
 import androidx.room.TypeConverter
 import com.google.gson.Gson

@@ -1,4 +1,4 @@
-package com.example.moviecatch.adapter
+package com.example.moviecatch.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.View

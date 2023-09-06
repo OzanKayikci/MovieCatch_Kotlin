@@ -1,4 +1,4 @@
-package com.example.moviecatch.di.retrofit
+package com.example.moviecatch.data.remote.api
 
 import com.example.moviecatch.models.Credits
 import com.example.moviecatch.models.Details

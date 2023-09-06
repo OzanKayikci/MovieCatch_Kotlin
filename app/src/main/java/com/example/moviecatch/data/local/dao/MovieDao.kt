@@ -1,11 +1,10 @@
-package com.example.moviecatch.di.dao
+package com.example.moviecatch.data.local.dao
 
 import androidx.room.Dao
-import androidx.room.Delete
 import androidx.room.Insert
-import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
+import com.example.moviecatch.data.local.entities.MovieData
 
 @Dao
 interface MovieDao {

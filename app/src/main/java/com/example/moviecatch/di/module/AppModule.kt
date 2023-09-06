@@ -3,11 +3,11 @@ package com.example.moviecatch.di.module
 import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
-import com.example.moviecatch.di.dao.GenreDao
-import com.example.moviecatch.di.dao.GenreDatabase
-import com.example.moviecatch.di.dao.MovieDao
-import com.example.moviecatch.di.dao.MovieDatabase
-import com.example.moviecatch.di.retrofit.RetrofitServiceInstance
+import com.example.moviecatch.data.local.dao.GenreDao
+import com.example.moviecatch.data.local.database.GenreDatabase
+import com.example.moviecatch.data.local.dao.MovieDao
+import com.example.moviecatch.data.local.database.MovieDatabase
+import com.example.moviecatch.data.remote.api.RetrofitServiceInstance
 import com.example.moviecatch.prefs.SessionManager
 import com.example.moviecatch.util.Constants
 import dagger.Module

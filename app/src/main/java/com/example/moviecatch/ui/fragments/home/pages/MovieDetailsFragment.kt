@@ -12,7 +12,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.example.moviecatch.R
-import com.example.moviecatch.adapter.ViewPagerAdapter
+import com.example.moviecatch.ui.adapter.ViewPagerAdapter
 import com.example.moviecatch.databinding.FragmentMovieDetailsBinding
 import com.example.moviecatch.models.Details
 import com.example.moviecatch.models.MovieResult

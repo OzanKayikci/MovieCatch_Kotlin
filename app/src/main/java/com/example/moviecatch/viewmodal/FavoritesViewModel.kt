@@ -1,18 +1,14 @@
 package com.example.moviecatch.viewmodal
 
 import android.util.Log
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import com.example.moviecatch.di.dao.MovieData
-import com.example.moviecatch.di.dao.MovieRepository
-import com.example.moviecatch.di.retrofit.RetrofitRepository
+import com.example.moviecatch.data.local.entities.MovieData
+import com.example.moviecatch.data.local.repository.MovieRepository
+import com.example.moviecatch.data.remote.repository.RetrofitRepository
 import com.example.moviecatch.models.Details
 
-import com.example.moviecatch.models.MovieResult
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.launch
 
 import javax.inject.Inject
 

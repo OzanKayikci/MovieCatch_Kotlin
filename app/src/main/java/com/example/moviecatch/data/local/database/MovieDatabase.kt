@@ -1,10 +1,13 @@
-package com.example.moviecatch.di.dao
+package com.example.moviecatch.data.local.database
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
+import com.example.moviecatch.data.local.dao.MovieDao
+import com.example.moviecatch.data.local.entities.MovieData
+import com.example.moviecatch.data.local.RoomTypeConverter
 
 
 @Database(

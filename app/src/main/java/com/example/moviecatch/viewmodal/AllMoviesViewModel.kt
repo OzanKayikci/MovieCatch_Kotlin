@@ -7,9 +7,9 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import com.example.moviecatch.di.retrofit.RetrofitRepository
+import com.example.moviecatch.data.remote.repository.RetrofitRepository
 import com.example.moviecatch.models.MovieResult
-import com.example.moviecatch.paging.MoviesPagingSource
+import com.example.moviecatch.data.remote.paging.MoviesPagingSource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject

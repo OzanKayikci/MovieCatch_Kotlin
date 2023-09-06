@@ -1,4 +1,4 @@
-package com.example.moviecatch.adapter
+package com.example.moviecatch.ui.adapter
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
