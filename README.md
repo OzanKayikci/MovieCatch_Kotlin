@@ -43,7 +43,7 @@ https://github.com/OzanKayikci/MovieCatch_Kotlin/assets/48061680/68693132-dcea-4
 ### Achievements:
 - MVVM architecture
 - Dependency Injection (Logic of dagger hilt)
-- Working with MutableLiveData
+- Working with LiveData
 - Store and read data with room
 - Endless Scroll with paging 
 - Activity and Fragments lifecycle,
