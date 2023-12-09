@@ -35,7 +35,7 @@ https://github.com/OzanKayikci/MovieCatch_Kotlin/assets/48061680/68693132-dcea-4
 - Room
 - Paging
 - ViewPager2
-- DataBinding
+- ViewBinding
 - NavController
 - Firebase
   
